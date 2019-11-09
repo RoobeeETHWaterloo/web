@@ -529,7 +529,7 @@ const core = {
 				console.log('fightAcc:', fightAcc);
 
 				var contract = new skaleInstance.eth.Contract(config.fightAbi, config.fightContractAddress);
-				contract.methods.searchFight(config.catContractAddress, core.char.currentIdGet(), fightAcc.address);
+				contract.methods.searchFight(config.catContractAddress, core.char.currentIdGet(), fightAcc.address).send({from: skaleInstance.eth.accounts.currentProvider.selectedAddress }).then(console.log);
 			},
 
 			/*
