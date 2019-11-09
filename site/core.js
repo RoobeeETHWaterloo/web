@@ -467,6 +467,9 @@ const core = {
 						console.log(error);
 					})
 			}
+			else {
+			  callback(chars);
+      }
 		},
 
 		/*

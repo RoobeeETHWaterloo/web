@@ -1,4 +1,5 @@
 import React from 'react'
+import core from 'core'
 
 import CharImage from 'components/ui/CharImage/CharImage'
 
@@ -6,7 +7,7 @@ import s from './Char.scss'
 
 
 const Char = ({ id, name, image }) => (
-  <a className={s.char} href={`/chars/${id}`}>
+  <a className={s.char} href={`/chars/${id}`} onClick={() => core.char.select(id)}>
     <div className={s.headline}>
       <div className={s.info}><span>LVL</span> 13</div>
       <div className={s.info}><span>W</span> 28</div>

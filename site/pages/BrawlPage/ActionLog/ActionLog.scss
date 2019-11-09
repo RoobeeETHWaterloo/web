@@ -2,7 +2,28 @@
   height: 100%;
   display: flex;
   flex: 1 1 auto;
+  align-items: flex-end;
   background-color: #2e3830;
   margin-bottom: 30px;
+  border-radius: 6px;
+}
+
+.content {
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.items {
+  padding: 20px;
+}
+
+.item {
+  background-color: rgba(#fff, 0.1);
+  padding: 10px;
+  margin-top: 10px;
+  line-height: 18px;
+  font-size: 12px;
+  color: #68ec00;
   border-radius: 6px;
 }

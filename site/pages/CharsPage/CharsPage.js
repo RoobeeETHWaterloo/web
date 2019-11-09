@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useConnect, useReducers } from 'store'
 import request from 'request'
+import core from 'core'
 
 import ContentSpinner from 'components/ui/ContentSpinner/ContentSpinner'
 
@@ -48,6 +49,20 @@ const CharsPage = () => {
         chars.setItems([])
       })
   }, [])
+
+  // useEffect(() => {
+  //   chars.setFetching(true)
+  //
+  //   core.char.getList((items) => {
+  //     const modifiedItems = items.map(({ id, name, image_url_cdn: image }) => ({
+  //       id,
+  //       name,
+  //       image,
+  //     }))
+  //
+  //     chars.setItems(modifiedItems)
+  //   })
+  // }, [])
 
   if (isFetching && !isFetched) {
     return (
