@@ -139,7 +139,7 @@ var config = {
 
 var skaleInstance;
 var fightAcc;
-var currentChar;
+var currentCharId;
 var chars;
 
 
@@ -250,15 +250,15 @@ const core = {
 		 * @description Select champ and remember it
 		 * @params charId
 		 */
-		select: function (charId) {
-			currentChar = charId;
+		select: function (_charId) {
+			localStorage.setItem('currentCharId', _charId);
 		},
 
 		/*
 		 * @description Get currnt champ
 		 */
-		currentGet: function () {
-			return chars[currentChar];
+		currentIdGet: function () {
+			return localStorage.getItem('currentCharId');
 		},
 
 		/*
@@ -272,7 +272,7 @@ const core = {
 	challengeRequest: (function () {
 		var onStart;
 		//var challengeInstance = new Web3(web3.currentProvider);
-		var acc;
+
 
 		return {
 			/*
@@ -281,19 +281,10 @@ const core = {
 			 */
 			create: function () {
 				fightAcc = skaleInstance.eth.accounts.create();
+				console.log('fightAcc:', fightAcc);
 
 				var contract = new skaleInstance.eth.Contract(config.fightAbi, config.fightContractAddress);
-				contract.methods.searchFight(address721, tokenID1, tempaddress1);
-				console.log('contract:', contract);
-
-
-				console.log('skaleInstance:', skaleInstance);
-				console.log(fightAcc);
-				if (onStart) {
-					onStart();
-				} else {
-					console.warn('set onFightStart before');
-				}
+				contract.methods.searchFight(config.catContractAddress, core.char.currentIdGet(), fightAcc.address);
 			},
 
 			/*
