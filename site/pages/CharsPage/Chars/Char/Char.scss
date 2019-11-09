@@ -3,18 +3,14 @@
   flex-direction: column;
   width: 100%;
   padding: 16px 20px;
-  background-color: #F2EFEA;
+  background-color: #fff;
   text-decoration: none;
   color: #000;
   user-select: none;
   cursor: pointer;
   border-radius: 8px;
-  box-shadow: #F2EFEA 0 0 0;
+  box-shadow: rgba(#8c6c6c, 0.21) 0 6px 9px;
   transition: box-shadow 0.13s linear;
-
-  &:hover {
-    box-shadow: #F2EFEA 0 0 0 3px;
-  }
 }
 
 .headline {
