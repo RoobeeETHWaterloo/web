@@ -1,16 +1,68 @@
 var core = (function() {
 
+	var config = {
+		skaleNetwork: "https://sip1.skalenodes.com:10051",
+		providers: {
+			MetaMask: "",
+			Torus: "/torus/dist/bundle.js"
+		}
+	};
+
+	/*
+	const client = dfuseClient.createDfuseClient({
+		// Replace 'web_abcdef12345678900000000000' with your own API key!
+		apiKey: 'web_abcdef12345678900000000000',
+		network: 'mainnet.eth.dfuse.io'
+	});*/
+
+	var skaleInstance;
+	var fightAcc;
+	var onReady;
 	var currentChar;
 	var chars;
 
+
+
+
 	core = {
+		provider: {
+			load: function(providerName) {
+				var loadScript = function(src, onLoad) {
+					var s = document.createElement( 'script' );
+					s.setAttribute( 'src', src );
+					s.onload = function() {console.log('provider loaded:', src); onLoad()};
+					document.body.appendChild(s);
+				};
+				if (providerName === 'MetaMask') {
+					// await torus.ethereum.enable()
+				} else if (providerName === 'Torus') {
+					console.log('initing Torus');
+					loadScript(config.providers.Torus, function() {
+						var torus = new Torus();
+						torus.init().then(function() {
+
+							torus.login().then(function() {
+								skaleInstance = window.skaleInstance = new Web3(torus.provider);
+								console.log('skaleInstance:', skaleInstance);
+								torus.setProvider({ host: config.skaleNetwork }).then(function() {
+									onReady();
+								});
+								//torus.ethereum.enable();
+							});
+						});
+					});
+
+				}
+			}
+		},
+
 		/*
 		 * @description Триггер готовности.
 		 * @params onReady {function}   // Колбек, срабатывает когда все проинициализировано
 		 */
-		onReady: function(onReady) {
+		onReady: function(_onReady) {
 			// Авторизация, инициализации
-			onReady();
+			onReady = _onReady;
 		},
 
 		// Методы игрока
@@ -85,12 +137,18 @@ var core = (function() {
 
 		challengeRequest: (function() {
 			var onStart;
+			//var challengeInstance = new Web3(web3.currentProvider);
+			var acc;
+
 			return {
 				/*
 				 * @description Создать заявку на бой
 				 * @return
 				 */
-				start: function () {
+				create: function () {
+					fightAcc = skaleInstance.eth.accounts.create();
+
+					console.log();
 					if (onStart) {
 						onStart();
 					} else {
