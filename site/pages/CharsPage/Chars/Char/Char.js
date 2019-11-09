@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import core from 'core'
 
 import CharImage from 'components/ui/CharImage/CharImage'
@@ -7,7 +8,7 @@ import s from './Char.scss'
 
 
 const Char = ({ id, name, image }) => (
-  <a className={s.char} href={`/chars/${id}`} onClick={() => core.char.select(id)}>
+  <Link className={s.char} to={`/chars/${id}`} onClick={() => core.char.select(id)}>
     <div className={s.headline}>
       <div className={s.info}><span>LVL</span> 13</div>
       <div className={s.info}><span>W</span> 28</div>
@@ -17,7 +18,7 @@ const Char = ({ id, name, image }) => (
       <CharImage className={s.image} src={image} />
     </div>
     <div className={s.name}>{name}</div>
-  </a>
+  </Link>
 )
 
 

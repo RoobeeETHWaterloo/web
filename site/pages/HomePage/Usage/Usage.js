@@ -5,9 +5,9 @@ import SectionTitle from 'pages/HomePage/components/SectionTitle/SectionTitle'
 
 import s from './Usage.scss'
 
-import img1 from './images/img-1.png'
+import img1 from './images/img-3.png'
 import img2 from './images/img-2.png'
-import img3 from './images/img-3.png'
+import img3 from './images/img-1.png'
 
 
 const items = [
