@@ -8,130 +8,343 @@ var config = {
 		MetaMask: "",
 		Torus: process.env.NODE_ENV === 'development' ? basePath('assets/torus.min.js') : '/assets/torus.min.js',
 	},
-	fightAbi: [{
-		constant: !0,
-		inputs: [{name: "", type: "uint8"}],
-		name: "challengesList",
-		outputs: [{name: "", type: "bytes32"}],
-		payable: !1,
-		stateMutability: "view",
-		type: "function"
-	}, {
-		constant: !0,
-		inputs: [{name: "", type: "uint256"}],
-		name: "fights",
-		outputs: [{name: "player1CharID", type: "bytes32"}, {
-			name: "player2CharID",
-			type: "bytes32"
-		}, {name: "player1GeneralAddress", type: "address"}, {
-			name: "player2GeneralAddress",
-			type: "address"
-		}, {name: "player1TempAddress", type: "address"}, {
-			name: "player2TempAddress",
-			type: "address"
-		}, {name: "stepNum", type: "uint256"}, {name: "lastStepBlock", type: "uint256"}, {
-			name: "winner",
-			type: "address"
-		}],
-		payable: !1,
-		stateMutability: "view",
-		type: "function"
-	}, {
-		constant: !1,
-		inputs: [{name: "ERC721", type: "address"}, {name: "tokenID", type: "uint256"}, {
-			name: "tempAddress",
-			type: "address"
-		}],
-		name: "searchFight",
-		outputs: [],
-		payable: !1,
-		stateMutability: "nonpayable",
-		type: "function"
-	}, {
-		constant: !0,
-		inputs: [{name: "playerAction1", type: "uint256"}, {
-			name: "playerAction2",
-			type: "uint256"
-		}, {name: "oponentAction1", type: "uint256"}, {name: "oponentAction2", type: "uint256"}],
-		name: "calculateDamage",
-		outputs: [{name: "", type: "uint8"}],
-		payable: !1,
-		stateMutability: "pure",
-		type: "function"
-	}, {
-		constant: !1,
-		inputs: [{name: "fightID", type: "uint256"}, {name: "stepNum", type: "uint256"}, {
-			name: "player1Action1",
-			type: "uint256"
-		}, {name: "player1Action2", type: "uint256"}, {
-			name: "player2Action1",
-			type: "uint256"
-		}, {name: "player2Action2", type: "uint256"}, {name: "player1Salt", type: "string"}, {
-			name: "player2Salt",
-			type: "string"
-		}, {name: "player1Signature", type: "bytes"}, {name: "player2Signature", type: "bytes"}],
-		name: "actionSet",
-		outputs: [],
-		payable: !1,
-		stateMutability: "nonpayable",
-		type: "function"
-	}, {
-		constant: !0,
-		inputs: [{name: "", type: "bytes32"}],
-		name: "chars",
-		outputs: [{name: "level", type: "uint8"}, {name: "fightsCount", type: "uint256"}, {
-			name: "winsCount",
-			type: "uint256"
-		}, {name: "fullHp", type: "uint8"}, {name: "damage", type: "uint8"}, {
-			name: "fightId",
-			type: "uint256"
-		}, {name: "currentHP", type: "uint8"}, {name: "lastFihgtBlockNumber", type: "uint256"}],
-		payable: !1,
-		stateMutability: "view",
-		type: "function"
-	}, {
-		constant: !0,
-		inputs: [{name: "", type: "bytes32"}],
-		name: "charsTopPlayer",
-		outputs: [{name: "", type: "address"}],
-		payable: !1,
-		stateMutability: "view",
-		type: "function"
-	}, {
-		constant: !0,
-		inputs: [{name: "fightID", type: "uint256"}, {name: "stepNum", type: "uint256"}, {
-			name: "playerAction1",
-			type: "uint256"
-		}, {name: "playerAction2", type: "uint256"}, {name: "playerSalt", type: "string"}, {
-			name: "signature",
-			type: "bytes"
-		}],
-		name: "checkAction",
-		outputs: [{name: "", type: "address"}],
-		payable: !1,
-		stateMutability: "pure",
-		type: "function"
-	}, {
-		anonymous: !1,
-		inputs: [{indexed: !1, name: "player", type: "address"}, {indexed: !1, name: "level", type: "uint256"}],
-		name: "LookingForAFight",
-		type: "event"
-	}, {
-		anonymous: !1,
-		inputs: [{indexed: !1, name: "player1", type: "address"}, {
-			indexed: !1,
-			name: "player2",
-			type: "address"
-		}, {indexed: !1, name: "fightId", type: "uint256"}],
-		name: "FightCreated",
-		type: "event"
-	}, {
-		anonymous: !1,
-		inputs: [{indexed: !1, name: "winner", type: "address"}, {indexed: !1, name: "fightId", type: "uint256"}],
-		name: "FightFinished",
-		type: "event"
-	}],
-	fightContractAddress: "0x1DCBD0ac51da7D49aBE13d29F3F363f65cE96e3b",
+	fightAbi: [
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "fightID",
+					"type": "uint256"
+				},
+				{
+					"name": "stepNum",
+					"type": "uint256"
+				},
+				{
+					"name": "player1Action1",
+					"type": "uint256"
+				},
+				{
+					"name": "player1Action2",
+					"type": "uint256"
+				},
+				{
+					"name": "player2Action1",
+					"type": "uint256"
+				},
+				{
+					"name": "player2Action2",
+					"type": "uint256"
+				},
+				{
+					"name": "player1Salt",
+					"type": "string"
+				},
+				{
+					"name": "player2Salt",
+					"type": "string"
+				},
+				{
+					"name": "player1Signature",
+					"type": "bytes"
+				},
+				{
+					"name": "player2Signature",
+					"type": "bytes"
+				}
+			],
+			"name": "actionSet",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "ERC721",
+					"type": "address"
+				},
+				{
+					"name": "tokenID",
+					"type": "uint256"
+				},
+				{
+					"name": "tempAddress",
+					"type": "address"
+				}
+			],
+			"name": "searchFight",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"name": "player",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"name": "level",
+					"type": "uint256"
+				}
+			],
+			"name": "LookingForAFight",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"name": "player1",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"name": "player2",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"name": "fightId",
+					"type": "uint256"
+				}
+			],
+			"name": "FightCreated",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"name": "winner",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"name": "fightId",
+					"type": "uint256"
+				}
+			],
+			"name": "FightFinished",
+			"type": "event"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "playerAction1",
+					"type": "uint256"
+				},
+				{
+					"name": "playerAction2",
+					"type": "uint256"
+				},
+				{
+					"name": "oponentAction1",
+					"type": "uint256"
+				},
+				{
+					"name": "oponentAction2",
+					"type": "uint256"
+				}
+			],
+			"name": "calculateDamage",
+			"outputs": [
+				{
+					"name": "",
+					"type": "uint8"
+				}
+			],
+			"payable": false,
+			"stateMutability": "pure",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "uint8"
+				}
+			],
+			"name": "challengesList",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bytes32"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "bytes32"
+				}
+			],
+			"name": "chars",
+			"outputs": [
+				{
+					"name": "level",
+					"type": "uint8"
+				},
+				{
+					"name": "fightsCount",
+					"type": "uint256"
+				},
+				{
+					"name": "winsCount",
+					"type": "uint256"
+				},
+				{
+					"name": "fullHp",
+					"type": "uint8"
+				},
+				{
+					"name": "damage",
+					"type": "uint8"
+				},
+				{
+					"name": "fightId",
+					"type": "uint256"
+				},
+				{
+					"name": "currentHP",
+					"type": "uint8"
+				},
+				{
+					"name": "lastFihgtBlockNumber",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "bytes32"
+				}
+			],
+			"name": "charsTopPlayer",
+			"outputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "fightID",
+					"type": "uint256"
+				},
+				{
+					"name": "stepNum",
+					"type": "uint256"
+				},
+				{
+					"name": "playerAction1",
+					"type": "uint256"
+				},
+				{
+					"name": "playerAction2",
+					"type": "uint256"
+				},
+				{
+					"name": "playerSalt",
+					"type": "string"
+				},
+				{
+					"name": "signature",
+					"type": "bytes"
+				}
+			],
+			"name": "checkAction",
+			"outputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "pure",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "fights",
+			"outputs": [
+				{
+					"name": "player1CharID",
+					"type": "bytes32"
+				},
+				{
+					"name": "player2CharID",
+					"type": "bytes32"
+				},
+				{
+					"name": "player1GeneralAddress",
+					"type": "address"
+				},
+				{
+					"name": "player2GeneralAddress",
+					"type": "address"
+				},
+				{
+					"name": "player1TempAddress",
+					"type": "address"
+				},
+				{
+					"name": "player2TempAddress",
+					"type": "address"
+				},
+				{
+					"name": "stepNum",
+					"type": "uint256"
+				},
+				{
+					"name": "lastStepBlock",
+					"type": "uint256"
+				},
+				{
+					"name": "winner",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		}
+	],
+	fightContractAddress: "0x7C9B06693030F136853F55cCB2806cb62063E4dA",
 	catContractAddress: "0x06012c8cf97BEaD5deAe237070F9587f8E7A266d"
 
 };
