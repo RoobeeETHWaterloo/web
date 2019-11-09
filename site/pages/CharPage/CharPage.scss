@@ -1,0 +1,68 @@
+.charPage {
+  display: flex;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 0 100px;
+}
+
+.leftCol {
+  width: 360px;
+  padding-right: 40px;
+}
+
+.rightCol {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.id {
+  font-size: 16px;
+  color: #bbb;
+}
+
+.name {
+  margin-bottom: 30px;
+  font-size: 34px;
+}
+
+.headline {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.table {
+  width: 100%;
+  background-color: #fff;
+  padding: 50px;
+  margin-bottom: 40px;
+  font-size: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(#968870, 0.4) 0 4px 10px;
+
+  td {
+    padding-top: 25px;
+  }
+
+  tr {
+
+    &:first-child td {
+      padding-top: 0;
+    }
+  }
+}
+
+.label {
+  padding-right: 10px;
+  text-align: right;
+  font-size: 14px;
+  color: #bbb;
+}
+
+.value {
+  font-weight: 600;
+
+  span {
+    font-weight: 400;
+  }
+}

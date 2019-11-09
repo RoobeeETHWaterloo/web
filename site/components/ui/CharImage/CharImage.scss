@@ -1,0 +1,52 @@
+.charImage {
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 100%;
+    padding-bottom: 100%;
+  }
+}
+
+.imageOverflow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+
+  img {
+    width: 100%;
+    display: block;
+  }
+
+  &.cat {
+
+    img {
+      width: auto;
+      margin: 0 -3%;
+      transform: translate3d(0, 8%, 0);
+    }
+  }
+
+  &.baseball {
+
+    img {
+      transform: translate3d(0, 3%, 0);
+    }
+  }
+
+  &.axie {
+
+    img {
+      width: 80%;
+      position: absolute;
+      bottom: 8%;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  }
+}

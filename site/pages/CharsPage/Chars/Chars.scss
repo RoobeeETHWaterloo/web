@@ -1,0 +1,14 @@
+.chars {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 0 100px;
+}
+
+.charContainer {
+  display: flex;
+  width: 25%;
+  padding: 10px;
+  box-sizing: border-box;
+}

@@ -1,0 +1,47 @@
+.char {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 16px 20px;
+  background-color: #F2EFEA;
+  text-decoration: none;
+  color: #000;
+  user-select: none;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: #F2EFEA 0 0 0;
+  transition: box-shadow 0.13s linear;
+
+  &:hover {
+    box-shadow: #F2EFEA 0 0 0 3px;
+  }
+}
+
+.headline {
+  display: flex;
+  margin: -10px;
+}
+
+.info {
+  margin: 10px;
+  font-size: 13px;
+
+  span {
+    color: #bbb;
+  }
+}
+
+.imageContainer {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.image {
+  width: 100%;
+  display: block;
+}
+
+.name {
+  padding: 0 20px;
+  text-align: center;
+}
