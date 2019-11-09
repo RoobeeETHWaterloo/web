@@ -141,6 +141,7 @@ var skaleInstance;
 var fightAcc;
 var currentCharId;
 var chars;
+var subscriptionFightCreated;
 
 
 const core = {
@@ -274,12 +275,30 @@ const core = {
 		//var challengeInstance = new Web3(web3.currentProvider);
 
 
+
 		return {
 			/*
 			 * @description Создать заявку на бой
 			 * @return
 			 */
 			create: function () {
+				subscriptionFightCreated = skaleInstance.eth.subscribe('FightCreated', {
+					address: config.fightContractAddress,
+					topics: [null]
+				}, function (error, result) {
+					console.log('result:', result, error);
+					if (!error) {
+						/*				const eventObj = web3.eth.abi.decodeLog(
+											eventJsonInterface.inputs,
+											result.data,
+											result.topics.slice(1)
+										);
+										console.log(`New ${eventName}!`, eventObj)
+										*/
+					}
+				});
+
+
 				fightAcc = skaleInstance.eth.accounts.create();
 				console.log('fightAcc:', fightAcc);
 
