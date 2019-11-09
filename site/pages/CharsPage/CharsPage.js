@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useConnect, useReducers } from 'store'
 import request from 'request'
 
 import ContentSpinner from 'components/ui/ContentSpinner/ContentSpinner'
@@ -25,12 +26,15 @@ import swordsImage from './images/swords.svg'
 // ]
 
 const CharsPage = () => {
-  const [ { isFetching, isFetched, items }, setState ] = useState({ isFetching: true, isFetched: false, items: null })
+  const { isFetching, isFetched, items } = useConnect((state) => state.chars)
+  const { chars } = useReducers()
 
   const title     = items && items.length ? 'Choose your fighter' : 'No fighters found'
   const subTitle  = items && items.length ? 'Here you can trade Axies with other adopters.' : 'Whoooohooo'
 
   useEffect(() => {
+    chars.setFetching(true)
+
     request('https://api.cryptokitties.co/v2/kitties?offset=0&limit=12&owner_wallet_address=0xb367b96bd9af396dc5281cfdcd9e9571f670832f&parents=false&authenticated=false&include=sale,sire,other&orderBy=id&orderDirection=desc')
       .then(({ data: { kitties: items, offset, limit, total } }) => {
         const modifiedItems = items.map(({ id, name, image_url_cdn: image }) => ({
@@ -39,9 +43,9 @@ const CharsPage = () => {
           image,
         }))
 
-        setState({ isFetching: false, isFetched: true, items: modifiedItems })
+        chars.setItems(modifiedItems)
       }, () => {
-        setState({ isFetching: false, isFetched: true, items: [] })
+        chars.setItems([])
       })
   }, [])
 
