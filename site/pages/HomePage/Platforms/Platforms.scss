@@ -1,0 +1,50 @@
+.items {
+  display: flex;
+  justify-content: center;
+}
+
+.itemContainer {
+  width: 560px;
+  padding: 0 20px;
+  box-sizing: border-box;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+}
+
+.item {
+  height: 300px;
+  padding: 60px 0;
+  background-color: #fff;
+  box-sizing: border-box;
+  border: 2px solid #D8DCEB;
+  text-align: center;
+  border-radius: 20px;
+
+  &:hover {
+    border-color: #FF1F70;
+    box-shadow: 0 10px 20px rgba(255, 31, 112, 0.12);
+  }
+}
+
+.imageContainer {
+  width: 240px;
+  height: 80px;
+  margin: 0 auto 60px;
+}
+
+.itemImage {
+  width: 100%;
+  display: block;
+}
+
+.itemTitle {
+  font-family: 'Varela Round', sans-serif;
+  font-size: 24px;
+  color: #FF1F70;
+}

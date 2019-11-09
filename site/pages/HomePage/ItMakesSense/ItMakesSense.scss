@@ -1,0 +1,30 @@
+.items {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.itemContainer {
+  margin-top: 60px;
+
+  &:nth-child(even) {
+    padding-left: 100px;
+  }
+
+  &:nth-child(odd) {
+    padding-right: 100px;
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.item {
+  background: #FFF5F8;
+  padding: 40px 60px;
+  border: 2px solid #FFC2D8;
+  font-size: 24px;
+  color: #3D4465;
+  box-shadow: 0 2px 10px rgba(255, 31, 112, 0.1);
+  border-radius: 20px;
+}
