@@ -8,9 +8,9 @@ import HealthBar from './HealthBar/HealthBar'
 import s from './HeroCard.scss'
 
 
-const HeroCard = ({ rtl }) => (
+const HeroCard = ({ currentHp, rtl }) => (
   <div className={cx({ [s.rtl]: rtl })}>
-    <HealthBar current={5} total={15} />
+    <HealthBar current={currentHp} total={15} />
     <HeroImage />
     <div className={s.name}>Super Cat</div>
   </div>

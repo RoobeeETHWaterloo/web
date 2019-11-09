@@ -1,81 +1,159 @@
 import React, { useState, useCallback } from 'react'
 
+import Button from 'components/ui/Button/Button'
+
 import HeroCard from './HeroCard/HeroCard'
 import Actions from './Actions/Actions'
 
 import s from './BrawlPage.scss'
 
 
-const selfActions = [
+const defenseActions = [
   { title: 'Head', value: 4 },
   { title: 'Body', value: 5 },
   { title: 'Tail', value: 6 },
 ]
 
-const opponentActions = [
+const attackActions = [
   { title: 'Head', value: 1 },
   { title: 'Body', value: 2 },
   { title: 'Tail', value: 3 },
 ]
 
+
 const BrawlPage = () => {
-  const [ values, setValues ] = useState([])
+  const [ playerValues, setPlayerValues ] = useState({ self: { hp: 15 }, opponent: { hp: 15 } })
+  const [ actionValues, setActionValues ] = useState({ defense: [], attack: [] })
+
+  const { self, opponent } = playerValues
 
   const handleActionsSelect = useCallback((value) => {
-    let newValues
+    const { defense, attack } = actionValues
+    let isItemExists
 
-    const isItemExists = values.map((v) => v).includes(value)
+    isItemExists = defense.map((v) => v).includes(value)
 
     if (isItemExists) {
-      newValues = values.filter((v) => v !== value)
+      return setActionValues({ defense: defense.filter((v) => v !== value), attack })
     }
-    else {
-      if (values.length > 1) {
-        const [ v1, v2 ] = values
 
-        const isSelfSide      = value > 3
-        const isV1OnSelfSide  = v1 > 3
-        const isV2OnSelfSide  = v2 > 3
+    isItemExists = attack.map((v) => v).includes(value)
 
-        if (isV1OnSelfSide !== isV2OnSelfSide) {
-          let index
+    if (isItemExists) {
+      return setActionValues({ defense, attack: attack.filter((v) => v !== value) })
+    }
 
-          if (isSelfSide && (isV1OnSelfSide || isV2OnSelfSide)) {
-            index = values.indexOf(isV1OnSelfSide ? v1 : v2)
-          }
-          else if (!isSelfSide && (!isV1OnSelfSide || !isV2OnSelfSide)) {
-            index = values.indexOf(!isV2OnSelfSide ? v2 : v1)
-          }
+    const selectedActionCount = defense.length + attack.length
+    const actionType = value < 4 ? 'attack' : 'defense'
 
-          newValues = [ values[1 - index], value ]
+    if (selectedActionCount === 0) {
+      setActionValues({ defense: [], attack: [], [actionType]: [ value ] })
+    }
+    else if (selectedActionCount === 1) {
+      if (attack.length) {
+        if (actionType === 'defense') {
+          setActionValues({ defense: [ value ], attack })
         }
         else {
-          newValues = [ values[1], value ]
+          if (attack[0] === value) {
+            setActionValues({ defense: [], attack: [] })
+          }
+          else {
+            setActionValues({ defense: [], attack: [ attack[0], value ] })
+          }
         }
       }
-      else if (values.length === 1) {
-        newValues = [ values[0], value ]
-      }
       else {
-        newValues = [ value ]
+        if (actionType === 'attack') {
+          setActionValues({ defense, attack: [ value ] })
+        }
+        else {
+          if (defense[0] === value) {
+            setActionValues({ defense: [], attack: [] })
+          }
+          else {
+            setActionValues({ defense: [ defense[0], value ], attack: [] })
+          }
+        }
       }
     }
+    else {
+      const isInOneActionType = defense.length === 2 || attack.length === 2
 
-    setValues(newValues)
-  }, [ values ])
+      if (isInOneActionType) {
+        if (attack.length) {
+          if (actionType === 'defense') {
+            setActionValues({ defense: [ value ], attack: [ attack[1] ] })
+          }
+          else {
+            if (attack.includes(value)) {
+              setActionValues({ defense: [], attack: attack.filter((v) => v !== value) })
+            }
+            else {
+              setActionValues({ defense: [], attack: [ attack[1], value ] })
+            }
+          }
+        }
+        else {
+          if (actionType === 'attack') {
+            setActionValues({ defense: [ defense[1] ], attack: [ value ] })
+          }
+          else {
+            if (defense.includes(value)) {
+              setActionValues({ defense: defense.filter((v) => v !== value), attack: [] })
+            }
+            else {
+              setActionValues({ defense: [ defense[1], value ], attack: [] })
+            }
+          }
+        }
+      }
+      else if (actionType === 'attack') {
+        if (attack[0] === value) {
+          setActionValues({ defense, attack: [] })
+        }
+        else {
+          setActionValues({ defense, attack: [ value ] })
+        }
+      }
+      else {
+        if (defense[0] === value) {
+          setActionValues({ defense: [], attack })
+        }
+        else {
+          setActionValues({ defense: [ value ], attack })
+        }
+      }
+    }
+  }, [ actionValues ])
+
+  const handleReadyClick = useCallback(() => {
+    const attackStrength  = 2
+    const opponentActions = [ 1, 2 ]
+    const newSelfHp       = playerValues.self.hp - opponentActions.filter((attack) => !actionValues.defense.map((v) => v - 3).includes(attack)).length * attackStrength
+    const newOpponentHp   = playerValues.opponent.hp - actionValues.attack.filter((attack) => !opponentActions.map((v) => v + 3).includes(attack)).length * attackStrength
+
+    setPlayerValues({ self: { hp: newSelfHp }, opponent: { hp: newOpponentHp } })
+  }, [ actionValues, playerValues ])
+
+  const isButtonDisabled = actionValues.length < 2
 
   return (
     <div className={s.page}>
       <div className={s.content}>
         <div className={s.col}>
-          <HeroCard />
-          <Actions items={selfActions} values={values} onChange={handleActionsSelect} />
+          <HeroCard currentHp={self.hp} />
+          <Actions items={defenseActions} values={actionValues.defense} onChange={handleActionsSelect} />
         </div>
         <div className={s.col}>
-          <Actions items={opponentActions} values={values} onChange={handleActionsSelect} />
-          <HeroCard rtl />
+          <Actions items={attackActions} values={actionValues.attack} onChange={handleActionsSelect} />
+          <HeroCard currentHp={opponent.hp} rtl />
         </div>
       </div>
+      <br /><br />
+      <Button disabled={isButtonDisabled} onClick={handleReadyClick}>Ready</Button>
+      <br />
+      You should select 2 actions
     </div>
   )
 }
