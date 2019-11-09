@@ -5,6 +5,7 @@ import Button from 'components/ui/Button/Button'
 import HeroCard from './HeroCard/HeroCard'
 import Actions from './Actions/Actions'
 import ActionAnimation from './ActionAnimation/ActionAnimation'
+import BrawlResults from './BrawlResults/BrawlResults'
 
 import s from './BrawlPage.scss'
 
@@ -148,6 +149,7 @@ const BrawlPage = () => {
 
   return (
     <div className={s.page}>
+      {/* <BrawlResults positive={false} /> */}
       <div className={s.content}>
         <div className={s.col}>
           <HeroCard currentHp={self.hp} />
