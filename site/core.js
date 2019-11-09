@@ -4,6 +4,7 @@ import axios from 'axios'
 
 var config = {
 	skaleNetwork: "https://sip1.skalenodes.com:10051",
+	mainNetwork: "mainnet",
 	providers: {
 		MetaMask: "",
 		Torus: process.env.NODE_ENV === 'development' ? basePath('assets/torus.min.js') : '/assets/torus.min.js',
@@ -370,35 +371,43 @@ const core = {
 				s.setAttribute('src', src);
 				s.onload = function () {
 					console.log('provider loaded:', src);
-					onLoad()
+					onLoad();
 				};
 				document.body.appendChild(s);
 			};
 
 			if (providerName === 'MetaMask') {
-				// await torus.ethereum.enable()
+				ethereum.enable();
+				skaleInstance = window.skaleInstance = new Web3(config.skaleNetwork);
+				ethereum.autoRefreshOnNetworkChange = true;
+				ethereum.send('eth_requestAccounts');
+
+
 			} else if (providerName === 'Torus') {
 				console.log('initing Torus');
 				loadScript(config.providers.Torus, function () {
-
-					//var isTorus = sessionStorage.getItem('pageUsingTorus');
-					//if (isTorus) {
-					//    web3Obj.initialize().then(function() {
-					//        this.setStateInfo()
-					//    });
-					//} else {
+					var isTorus = sessionStorage.getItem('pageUsingTorus');
 					var torus = new Torus();
-					torus.init().then(function () {
-						torus.login().then(function () {
-							skaleInstance = window.skaleInstance = new Web3(torus.provider);
-							console.log('skaleInstance:', skaleInstance);
-							//torus.setProvider({host: config.skaleNetwork}).then(function () {
-							callback();
-							//});
-							//torus.ethereum.enable();
+
+					torus.init({buildEnv: "testing"})
+						.then(function () {
+							torus.login().then(function () {
+								skaleInstance = window.skaleInstance = new Web3(torus.provider);
+								console.log('skaleInstance:', skaleInstance);
+								console.warn('using toras:', isTorus);
+								sessionStorage.setItem('pageUsingTorus', 1);
+								torus.setProvider({host: config.skaleNetwork}).then(function () {
+									callback();
+								});
+
+								//torus.ethereum.enable();
+							}).catch(function () {
+								console.log('already auth');
+							});
+						}).catch(function (err) {
+							console.log('init err:', err);
 						});
-					});
-					//}
+
 				});
 
 			}
