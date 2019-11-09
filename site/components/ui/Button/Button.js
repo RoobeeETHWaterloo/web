@@ -6,8 +6,9 @@ import cx from 'classnames'
 import s from './Button.scss'
 
 
-const Button = ({ children, className, color = 'standard', to, disabled, onClick }) => {
+const Button = ({ children, className, small, color = 'standard', to, disabled, onClick }) => {
   const buttonClassName = cx(s.button, className, {
+    [s.small]: small,
     [s.disabled]: disabled,
     [s[color]]: color,
   })
