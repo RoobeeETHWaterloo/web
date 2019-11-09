@@ -137,6 +137,11 @@ const BrawlPage = () => {
 
     setOpponentActions(opponentActions)
     setPlayerValues({ self: { hp: newSelfHp }, opponent: { hp: newOpponentHp } })
+
+    // TODO weird code
+    setTimeout(() => {
+      setOpponentActions({ defense: [], attack: [] })
+    }, 1800)
   }, [ selfActions, playerValues ])
 
   const isButtonDisabled = selfActions.length < 2
