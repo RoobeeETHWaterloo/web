@@ -1,11 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import routes from 'routes'
+import core from 'core'
 
 import Root from 'containers/Root/Root'
 
 
-ReactDOM.render(
-  <Root routes={routes} />,
-  document.getElementById('root')
-)
+core.provider.load('MetaMask', () => {
+  // TODO render loader
+
+  ReactDOM.render(
+    <Root routes={routes} />,
+    document.getElementById('root')
+  )
+})
