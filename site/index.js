@@ -6,11 +6,12 @@ import core from 'core'
 import Root from 'containers/Root/Root'
 
 
-// core.provider.load('Torus', () => {
+
+core.provider.load('Torus', () => {
   // TODO render loader
 
   ReactDOM.render(
     <Root routes={routes} />,
     document.getElementById('root')
   )
-// })
+})
