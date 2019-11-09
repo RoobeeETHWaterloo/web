@@ -22,7 +22,7 @@ const RadioContainer = (props) => {
   return (
     <label className={className}>
       <input {...nodeProps} />
-      {children}
+      {typeof children === 'function' ? children({ activeValue }) : children}
     </label>
   )
 }

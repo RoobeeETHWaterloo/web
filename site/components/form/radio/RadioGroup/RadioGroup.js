@@ -4,13 +4,17 @@ import PropTypes from 'prop-types'
 
 export const RadioGroupContext = createContext(null)
 
-const RadioGroup = ({ children, className, name, initialValue }) => {
+const RadioGroup = ({ children, className, name, initialValue, onChange }) => {
   const [ value, setValue ] = useState(initialValue)
 
   const handleChange = useCallback((event) => {
     const { value } = event.target
 
     setValue(value)
+
+    if (typeof onChange === 'function') {
+      onChange(value)
+    }
   }, [])
 
   const context = useMemo(() => ({
@@ -38,6 +42,7 @@ RadioGroup.propTypes = {
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
   initialValue: PropTypes.any,
+  onChange: PropTypes.func,
 }
 
 
