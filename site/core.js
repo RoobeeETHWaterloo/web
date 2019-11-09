@@ -2,8 +2,8 @@ var config = {
   skaleNetwork: "https://sip1.skalenodes.com:10051",
   providers: {
     MetaMask: "",
-    Torus: "/torus/dist/bundle.js"
-  }
+    Torus: "/assets/torus.min.js",
+  },
 };
 
 /*
@@ -34,6 +34,7 @@ const core = {
         s.onload = function() {console.log('provider loaded:', src); onLoad()};
         document.body.appendChild(s);
       };
+
       if (providerName === 'MetaMask') {
         // await torus.ethereum.enable()
       } else if (providerName === 'Torus') {
