@@ -17,15 +17,22 @@
   border-radius: 8px;
   transition: background-color 0.23s linear, box-shadow 0.01s linear, transform 0.01s linear;
 
+  &.small {
+    height: 40px;
+    line-height: 42px;
+    padding: 0 36px;
+    font-size: 18px;
+  }
+
   &:active {
-    transform: translate3d(0, 4px, 0);
+    transform: translate3d(0, 1px, 0);
   }
 
   &.standard {
     background-color: #ea1c55;
     border-color: #a5173e;
     text-shadow: #a5173e 0 2px;
-    box-shadow: #a5173e 0 6px, #ff626f 0 -1px 1px inset;
+    box-shadow: #a5173e 0 3px, #ff626f 0 -1px 1px inset;
 
     &:hover {
       background-color: #f31c56;
@@ -40,7 +47,7 @@
     background-color: #1080ea;
     border-color: #1062c4;
     text-shadow: #1062c4 0 2px;
-    box-shadow: #1062c4 0 6px, #2b99ff 0 -1px 1px inset;
+    box-shadow: #1062c4 0 3px, #2b99ff 0 -1px 1px inset;
 
     &:hover {
       background-color: #1184f2;
@@ -58,6 +65,6 @@
     color: #ccc !important;
     text-shadow: #333 0 -2px !important;
     transform: translate3d(0, 0, 0) !important;
-    box-shadow: #333 0 6px, #aaa 0 -1px 1px inset !important;
+    box-shadow: #333 0 3px, #aaa 0 -1px 1px inset !important;
   }
 }

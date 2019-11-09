@@ -1,22 +1,32 @@
 .healthBar {
-  width: 240px;
-  height: 18px;
-  background-color: #000;
+  width: 100%;
   position: relative;
 }
 
-.values {
-  position: absolute;
-  right: 10px;
-  top: 0;
-  z-index: 10;
-  line-height: 22px;
-  font-size: 14px;
-  color: #fff;
+.barContainer {
+  width: 100%;
+  height: 20px;
+  background-color: #ffd9d9;
+  border: 1px solid #4f4f4f;
+  overflow: hidden;
+  border-radius: 10px;
 }
 
 .bar {
   height: 100%;
-  background-color: red;
+  background-color: #68EC00;
   transition: width 0.5s ease;
+  box-shadow: #67a934 0 0 0 1px;
+}
+
+.values {
+  position: absolute;
+  right: 5px;
+  top: 100%;
+  margin-top: 2px;
+  z-index: 10;
+  line-height: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4f4f4f;
 }

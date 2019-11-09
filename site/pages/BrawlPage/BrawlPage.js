@@ -3,28 +3,34 @@ import React, { useState, useCallback } from 'react'
 import Button from 'components/ui/Button/Button'
 
 import HeroCard from './HeroCard/HeroCard'
-import Actions from './Actions/Actions'
-import ActionAnimation from './ActionAnimation/ActionAnimation'
+import ActionLog from './ActionLog/ActionLog'
 import BrawlResults from './BrawlResults/BrawlResults'
 
 import s from './BrawlPage.scss'
 
+import shieldImage from './images/shield.svg'
+import swordImage from './images/sword.svg'
+
 
 const defenseActions = [
-  { title: 'Head', value: 4 },
-  { title: 'Body', value: 5 },
-  { title: 'Tail', value: 6 },
+  { icon: shieldImage, value: 4 },
+  { icon: shieldImage, value: 5 },
+  { icon: shieldImage, value: 6 },
 ]
 
 const attackActions = [
-  { title: 'Head', value: 1 },
-  { title: 'Body', value: 2 },
-  { title: 'Tail', value: 3 },
+  { icon: swordImage, value: 1 },
+  { icon: swordImage, value: 2 },
+  { icon: swordImage, value: 3 },
 ]
 
 
 const BrawlPage = () => {
-  const [ playerValues, setPlayerValues ]       = useState({ self: { hp: 15 }, opponent: { hp: 15 } })
+  const [ playerValues, setPlayerValues ] = useState({
+    self: { name: 'TinkyWinky', image: 'https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/1720283.svg', hp: 15 },
+    opponent: { name: 'WizzyPizzy', image: 'https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/1720012.svg', hp: 15 },
+  })
+
   const [ selfActions, setSelfActions ]         = useState({ defense: [], attack: [] })
   const [ opponentActions, setOpponentActions ] = useState({ defense: [], attack: [] })
 
@@ -137,7 +143,7 @@ const BrawlPage = () => {
     const newOpponentHp   = playerValues.opponent.hp - selfActions.attack.filter((attack) => !opponentActions.defense.map((v) => v + 3).includes(attack)).length * attackStrength
 
     setOpponentActions(opponentActions)
-    setPlayerValues({ self: { hp: newSelfHp }, opponent: { hp: newOpponentHp } })
+    setPlayerValues((state) => ({ ...state, self: { ...state.self, hp: newSelfHp }, opponent: { ...state.opponent, hp: newOpponentHp } }))
 
     // TODO weird code
     setTimeout(() => {
@@ -150,28 +156,35 @@ const BrawlPage = () => {
   return (
     <div className={s.page}>
       {/* <BrawlResults positive={false} /> */}
+      <div className={s.header}>
+        <div className={s.title}>Brawl is live!</div>
+        <div className={s.subTitle}>First rule is tell everybody about CryptoBrawl :)</div>
+      </div>
       <div className={s.content}>
         <div className={s.col}>
-          <HeroCard currentHp={self.hp} />
-          <Actions items={defenseActions} values={selfActions.defense} onChange={handleActionsSelect}>
-            {
-              (itemProps, actionComponent) => (
-                <ActionAnimation key={itemProps.value} active={opponentActions.attack.includes(itemProps.value - 3)}>
-                  {actionComponent}
-                </ActionAnimation>
-              )
-            }
-          </Actions>
+          <HeroCard
+            hero={playerValues.self}
+            actionTitle="Defense"
+            actionItems={defenseActions}
+            actionValues={selfActions.defense}
+            onActionSelect={handleActionsSelect}
+          />
+        </div>
+        <div className={s.centralCol}>
+          <ActionLog />
+          <Button small disabled={isButtonDisabled} onClick={handleReadyClick}>Ready</Button>
         </div>
         <div className={s.col}>
-          <Actions items={attackActions} values={selfActions.attack} onChange={handleActionsSelect} />
-          <HeroCard currentHp={opponent.hp} rtl />
+          <HeroCard
+            hero={playerValues.opponent}
+            actionTitle="Attack"
+            actionItems={attackActions}
+            actionValues={selfActions.attack}
+            rtl
+            onActionSelect={handleActionsSelect}
+          />
         </div>
       </div>
-      <br /><br />
-      <Button disabled={isButtonDisabled} onClick={handleReadyClick}>Ready</Button>
-      <br />
-      You should select 2 actions
     </div>
   )
 }

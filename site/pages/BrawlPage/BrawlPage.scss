@@ -3,6 +3,23 @@
   margin: 0 auto;
 }
 
+.header {
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.title {
+  font-family: 'Varela Round', sans-serif;
+  font-size: 42px;
+}
+
+.subTitle {
+  margin-top: 10px;
+  font-family: 'Varela Round', sans-serif;
+  font-size: 18px;
+  color: #f05f90;
+}
+
 .content {
   display: flex;
   justify-content: space-between;
@@ -11,4 +28,12 @@
 .col {
   min-width: 400px;
   display: flex;
+}
+
+.centralCol {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0 60px;
 }

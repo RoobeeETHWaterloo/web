@@ -25,9 +25,10 @@
   &.cat {
 
     img {
-      width: auto;
-      margin: 0 -3%;
-      transform: translate3d(0, 8%, 0);
+      width: 128%;
+      position: absolute;
+      bottom: -13%;
+      left: -24%;
     }
   }
 
