@@ -6,15 +6,16 @@ import Action from './Action/Action'
 import s from './Actions.scss'
 
 
-const Actions = ({ items, values, onChange }) => {
+const Actions = ({ children, items, values, onChange }) => {
 
   return (
     <div className={s.actions}>
       {
-        items.map(({ title, value }) => {
+        items.map((item) => {
+          const { title, value } = item
           const isActive = values.includes(value)
 
-          return (
+          const node = (
             <Action
               key={value}
               isActive={isActive}
@@ -23,6 +24,12 @@ const Actions = ({ items, values, onChange }) => {
               {title}
             </Action>
           )
+
+          if (typeof children === 'function') {
+            return children(item, node)
+          }
+
+          return node
         })
       }
     </div>
