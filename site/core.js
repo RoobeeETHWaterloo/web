@@ -495,6 +495,7 @@ const core = {
 			 * @return
 			 */
 			create: function () {
+				/*
 				subscriptionFightCreated = skaleInstance.eth.subscribe('FightCreated', {
 					address: config.fightContractAddress,
 					topics: [null]
@@ -507,10 +508,10 @@ const core = {
 											result.topics.slice(1)
 										);
 										console.log(`New ${eventName}!`, eventObj)
-										*/
+										//* /
 					}
 				});
-
+				*/
 
 				fightAcc = skaleInstance.eth.accounts.create();
 				console.log('fightAcc:', fightAcc);
