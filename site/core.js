@@ -1,8 +1,11 @@
+import basePath from 'base-path'
+
+
 var config = {
   skaleNetwork: "https://sip1.skalenodes.com:10051",
   providers: {
     MetaMask: "",
-    Torus: "/assets/torus.min.js",
+    Torus: process.env.NODE_ENV === 'development' ? basePath('assets/torus.min.js') : '/assets/torus.min.js',
   },
 };
 

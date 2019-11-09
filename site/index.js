@@ -6,7 +6,7 @@ import core from 'core'
 import Root from 'containers/Root/Root'
 
 
-core.provider.load('MetaMask', () => {
+core.provider.load('Torus', () => {
   // TODO render loader
 
   ReactDOM.render(

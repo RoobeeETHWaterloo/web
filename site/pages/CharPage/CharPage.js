@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import core from 'core'
 
 import CharImage from 'components/ui/CharImage/CharImage'
 import Button from 'components/ui/Button/Button'
@@ -18,25 +19,30 @@ const data = {
   },
 }
 
-const CharPage = () => (
-  <div className={s.charPage}>
-    <div className={s.leftCol}>
-      <CharImage src={data.image} /><br />
-      <Button to="/chars" color="blue">Select character</Button><br />
-      <Button>FIGHT!</Button>
-    </div>
-    <div className={s.rightCol}>
-      <div className={s.headline}>
-        <div>
-          <div className={s.id}># 1344552</div>
-          <div className={s.name}>Foo</div>
-        </div>
-        <div>
+const CharPage = () => {
+  const handleFightClick = useCallback(() => {
 
-        </div>
+  }, [])
+
+  return (
+    <div className={s.charPage}>
+      <div className={s.leftCol}>
+        <CharImage src={data.image} /><br />
+        <Button to="/chars" color="blue">Select character</Button><br />
+        <Button onClick={handleFightClick}>FIGHT!</Button>
       </div>
-      <table className={s.table}>
-        <tbody>
+      <div className={s.rightCol}>
+        <div className={s.headline}>
+          <div>
+            <div className={s.id}># 1344552</div>
+            <div className={s.name}>Foo</div>
+          </div>
+          <div>
+
+          </div>
+        </div>
+        <table className={s.table}>
+          <tbody>
           <tr>
             <td className={s.label}>OWNER:</td>
             <td className={s.value}>0x0235235235235asfafaf66aa</td>
@@ -61,11 +67,12 @@ const CharPage = () => (
             <td className={s.label}>LOSES:</td>
             <td className={s.value}>24</td>
           </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 
 export default CharPage
