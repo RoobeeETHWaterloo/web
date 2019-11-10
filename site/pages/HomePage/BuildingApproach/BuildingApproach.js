@@ -12,15 +12,15 @@ import metamaskImage from '../Platforms/images/metamask.png'
 
 
 const items = [
-  { image: ethereumImage, title: 'We use Ethereum as a main blockchain' },
-  { image: skaleImage, title: 'We use SKALE as a platform for game functioning' },
-  { image: torusImage, title: 'We use Torus for a convenient log-in' },
-  { image: metamaskImage, title: 'We use Meta Mask for less convenient but more common log-in' },
+  { image: ethereumImage, title: 'Ethereum as a main blockchain' },
+  { image: skaleImage, title: 'SKALE as a platform for a battleground functioning' },
+  { image: torusImage, title: 'Torus for a convenient log-in' },
+  { image: metamaskImage, title: 'MetaMask as a common way to log-in' },
 ]
 
 const BuildingApproach = () => (
   <Section className={s.section}>
-    <SectionTitle>We provide interoperability between NFT Platforms</SectionTitle>
+    <SectionTitle>Buidling Approach</SectionTitle>
     <div className={s.items}>
       {
         items.map(({ image, title }, index) => (

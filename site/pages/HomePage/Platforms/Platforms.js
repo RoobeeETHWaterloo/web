@@ -35,7 +35,7 @@ const Platforms = ({ history }) => {
 
   return (
     <Section>
-      <SectionTitle>We provide interoperability between NFT Platforms</SectionTitle>
+      <SectionTitle>We provide interoperability between NFT via</SectionTitle>
       <div className={s.items}>
         {
           items.map(({ image, title, provider }, index) => {

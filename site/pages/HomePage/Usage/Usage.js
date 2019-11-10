@@ -18,7 +18,7 @@ const items = [
 
 const Usage = () => (
   <Section className={s.section}>
-    <SectionTitle>Using Crypto Brawl you can join a fight using:</SectionTitle>
+    <SectionTitle>Using CryptoBrawl you can join a fight with:</SectionTitle>
     <div className={s.items}>
       {
         items.map(({ image, title }, index) => (
@@ -31,7 +31,7 @@ const Usage = () => (
         ))
       }
     </div>
-    <div className={s.text}>or literally every ERC721 you own to beat somebodies asses!</div>
+    <div className={s.text}>or literally any ERC721 you own to beat somebodies asses!</div>
   </Section>
 )
 

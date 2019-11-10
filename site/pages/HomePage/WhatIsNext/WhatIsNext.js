@@ -9,7 +9,7 @@ import checkmarkIcon from './images/checkmark.svg'
 
 
 const items = [
-  'Rating system',
+  'Bridge between Skale and Ethereum',
   'Skill system',
   'Advanced game mechanics',
   'Oracles / Validation system',
@@ -31,7 +31,7 @@ const WhatIsNext = () => (
         ))
       }
     </div>
-    <div className={s.moreText}>Many more... <span className={s.icon}>🤗</span></div>
+    <div className={s.moreText}>And many more... <span className={s.icon}>🤗</span></div>
   </Section>
 )
 
