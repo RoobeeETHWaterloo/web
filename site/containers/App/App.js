@@ -11,9 +11,9 @@ const selectedProvider = localStorage.getItem('selectedProvider')
 
 const ProviderLoader = ({ onInit }) => {
   useEffect(() => {
-    // core.provider.load(selectedProvider, () => {
+    core.provider.load(selectedProvider, () => {
       onInit()
-    // })
+    })
   }, [])
 
   return (
