@@ -18,4 +18,15 @@
   font-family: 'Varela Round', sans-serif;
   font-size: 18px;
   color: #f05f90;
+
+  a {
+    padding: 0 2px;
+    text-decoration: underline;
+    font-weight: 600;
+    color: #ff3277 !important;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }

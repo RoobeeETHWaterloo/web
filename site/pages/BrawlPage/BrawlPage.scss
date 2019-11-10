@@ -3,37 +3,19 @@
   margin: 0 auto;
 }
 
-.header {
-  margin-bottom: 60px;
+.content {
   text-align: center;
 }
 
 .title {
+  margin-bottom: 20px;
+  margin-top: 20px;
   font-family: 'Varela Round', sans-serif;
-  font-size: 42px;
+  font-weight: 600;
+  font-size: 36px;
 }
 
-.subTitle {
-  margin-top: 10px;
+.text {
   font-family: 'Varela Round', sans-serif;
-  font-size: 18px;
-  color: #f05f90;
-}
-
-.content {
-  display: flex;
-  justify-content: space-between;
-}
-
-.col {
-  min-width: 400px;
-  display: flex;
-}
-
-.centralCol {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  min-width: 0;
-  padding: 0 60px;
+  font-size: 24px;
 }

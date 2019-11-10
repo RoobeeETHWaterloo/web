@@ -25,9 +25,9 @@
   right: 0;
   bottom: 0;
   margin: auto;
-  border: 4px solid #F05F90;
   opacity: 1;
   border-radius: 50%;
+  box-shadow: #F05F90 0 0 0 4px;
   animation: spinner 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 
   &:nth-child(2) {

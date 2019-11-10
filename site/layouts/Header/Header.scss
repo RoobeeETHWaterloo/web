@@ -21,15 +21,3 @@
   width: 220px;
   display: block;
 }
-
-.searchContainer {
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 20px;
-  margin-top: -106px;
-  transition: margin-top 0.2s ease-out;
-
-  &.visible {
-    margin-top: 0;
-  }
-}
