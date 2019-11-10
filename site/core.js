@@ -424,67 +424,83 @@ var myCharState;
 
 
 const core = {
-	provider: {
-		/**
-		 *
-		 * @param {string} providerName "MetaMask|Torus"
-		 * @param {Function} callback "MetaMask|Torus"
-		 */
-		load: function (providerName, callback) {
+	provider: (() => {
+		let onConnect
 
-			var onReady = function () {
-				fightContract = window.fightContract = new skaleInstance.eth.Contract(config.fightAbi, config.fightContractAddress);
-				callback();
-			};
+		return {
+			/**
+			 *
+			 * @param {string} providerName "MetaMask|Torus"
+			 * @param {Function} callback "MetaMask|Torus"
+			 */
+			load: function (providerName, callback) {
 
-			var loadScript = function (src, onLoad) {
-				var s = document.createElement('script');
-				s.setAttribute('src', src);
-				s.onload = function () {
-					console.log('provider loaded:', src);
-					onLoad();
+				var onReady = function () {
+					fightContract = window.fightContract = new skaleInstance.eth.Contract(config.fightAbi, config.fightContractAddress);
+
+					if (typeof callback === 'function') {
+						callback();
+					}
+
+					if (typeof onConnect === 'function') {
+						onConnect();
+					}
 				};
-				document.body.appendChild(s);
-			};
 
-			if (providerName === 'MetaMask') {
-				ethereum.enable();
-				skaleInstance = window.skaleInstance = new Web3(config.skaleNetwork);
-				ethereum.autoRefreshOnNetworkChange = true;
-				ethereum.send('eth_requestAccounts');
-				callback();
+				var loadScript = function (src, onLoad) {
+					var s = document.createElement('script');
+					s.setAttribute('src', src);
+					s.onload = function () {
+						console.log('provider loaded:', src);
+						onLoad();
+					};
+					document.body.appendChild(s);
+				};
 
-			} else if (providerName === 'Torus') {
-				console.log('initing Torus');
-				loadScript(config.providers.Torus, function () {
-					var isTorus = sessionStorage.getItem('pageUsingTorus');
-					var torus = new Torus();
+				if (providerName === 'MetaMask') {
+					ethereum.enable();
+					skaleInstance = window.skaleInstance = new Web3(config.skaleNetwork);
+					ethereum.autoRefreshOnNetworkChange = true;
+					ethereum.send('eth_requestAccounts');
+					callback();
+				}
+				else if (providerName === 'Torus') {
+					console.log('initing Torus');
+					loadScript(config.providers.Torus, function () {
+						var isTorus = sessionStorage.getItem('pageUsingTorus');
+						var torus = new Torus();
 
-					torus.init({buildEnv: "testing"})
-						.then(function () {
-							torus.login().then(function () {
-								skaleInstance = window.skaleInstance = new Web3(torus.provider);
-								console.log('skaleInstance:', skaleInstance);
-								console.warn('using toras:', isTorus);
-								sessionStorage.setItem('pageUsingTorus', 1);
-								torus.setProvider({host: config.skaleNetwork, networkName: 'skale'}).then(function () {
-									onReady();
+						torus.init({buildEnv: "testing"})
+							.then(function () {
+								torus.login()
+									.then(function () {
+										skaleInstance = window.skaleInstance = new Web3(torus.provider);
+										console.log('skaleInstance:', skaleInstance);
+										console.warn('using toras:', isTorus);
+										sessionStorage.setItem('pageUsingTorus', 1);
+										torus.setProvider({host: config.skaleNetwork, networkName: 'skale'}).then(function () {
+											onReady();
 
-									//config.p2pConnectorUrl + "/discordSet"
-								});
+											//config.p2pConnectorUrl + "/discordSet"
+										});
 
-							}).catch(function () {
-								console.log('already auth');
+									})
+									.catch(function () {
+										console.log('already auth');
+									});
+							})
+							.catch(function (err) {
+								console.log('init err:', err);
 							});
-						}).catch(function (err) {
-						console.log('init err:', err);
 					});
+				}
+			},
 
-				});
-
-			}
+			onConnect: (_onConnect) => {
+				onConnect = _onConnect
+			},
 		}
-	},
+	})(),
 
 
 	// Методы игрока
