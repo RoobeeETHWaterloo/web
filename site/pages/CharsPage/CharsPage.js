@@ -34,21 +34,23 @@ const CharsPage = () => {
   const subTitle  = items && items.length ? 'Here you can trade Axies with other adopters.' : 'Whoooohooo'
 
   useEffect(() => {
-    chars.setFetching(true)
+    if (!isFetched) {
+      chars.setFetching(true)
 
-    request('https://api.cryptokitties.co/v2/kitties?offset=0&limit=12&owner_wallet_address=0xb367b96bd9af396dc5281cfdcd9e9571f670832f&parents=false&authenticated=false&include=sale,sire,other&orderBy=id&orderDirection=desc')
-      .then(({ data: { kitties: items, offset, limit, total } }) => {
-        const modifiedItems = items.map(({ id, name, image_url_cdn: image }) => ({
-          id,
-          name,
-          image,
-        }))
+      request('https://api.cryptokitties.co/v2/kitties?offset=0&limit=12&owner_wallet_address=0xb367b96bd9af396dc5281cfdcd9e9571f670832f&parents=false&authenticated=false&include=sale,sire,other&orderBy=id&orderDirection=desc')
+        .then(({ data: { kitties: items, offset, limit, total } }) => {
+          const modifiedItems = items.map(({ id, name, image_url_cdn: image }) => ({
+            id,
+            name,
+            image,
+          }))
 
-        chars.setItems(modifiedItems)
-      }, () => {
-        chars.setItems([])
-      })
-  }, [])
+          chars.setItems(modifiedItems)
+        }, () => {
+          chars.setItems([])
+        })
+    }
+  }, [ isFetched ])
 
   // useEffect(() => {
   //   chars.setFetching(true)

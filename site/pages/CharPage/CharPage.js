@@ -1,28 +1,52 @@
-import React, { useCallback } from 'react'
+import React, { useEffect, useCallback } from 'react'
+import { useConnect, useReducers } from 'store'
+import request from 'request'
 import core from 'core'
 
+import ContentSpinner from 'components/ui/ContentSpinner/ContentSpinner'
 import CharImage from 'components/ui/CharImage/CharImage'
 import Button from 'components/ui/Button/Button'
 
 import s from './CharPage.scss'
 
 
-const data = {
-  id: 1,
-  address: '0x0324325bh325gv5gvjvcsdfsdf7',
-  name: 'Foo',
-  image: 'https://miro.medium.com/max/480/1*OGfTUWooSC2NMqw8x6nn4w@2x.png',
-  stats: {
-    hp: 15,
-    wins: 28,
-    looses: 13,
-  },
-}
+const CharPage = ({ match: { params: { id: charId } } }) => {
+  const { isFetching, isFetched, data } = useConnect(({ chars: { isFetching, isFetched, items } }) => ({
+    isFetching,
+    isFetched,
+    data: items ? items.find((char) => Number(char.id) === Number(charId)) : null,
+  }), [ charId ])
 
-const CharPage = () => {
+  const { chars } = useReducers()
+
+  useEffect(() => {
+    if (!data) {
+      chars.setFetching(true)
+
+      request('https://api.cryptokitties.co/v2/kitties?offset=0&limit=12&owner_wallet_address=0xb367b96bd9af396dc5281cfdcd9e9571f670832f&parents=false&authenticated=false&include=sale,sire,other&orderBy=id&orderDirection=desc')
+        .then(({ data: { kitties: items, offset, limit, total } }) => {
+          const modifiedItems = items.map(({ id, name, image_url_cdn: image }) => ({
+            id,
+            name,
+            image,
+          }))
+
+          chars.setItems(modifiedItems)
+        }, () => {
+          chars.setItems([])
+        })
+    }
+  }, [ data ])
+
   const handleFightClick = useCallback(() => {
 
   }, [])
+
+  if (!isFetched && (!data || isFetching)) {
+    return (
+      <ContentSpinner />
+    )
+  }
 
   return (
     <div className={s.charPage}>

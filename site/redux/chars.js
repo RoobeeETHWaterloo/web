@@ -4,7 +4,7 @@ const initialState = {
   items: [],
 }
 
-const setFetching = (state, value) => ({ ...state, isFetching: value })
+const setFetching = (state, value) => ({ ...state, isFetched: false, isFetching: value })
 
 const setItems = (state, items) => ({ isFetching: false, isFetched: true, items })
 
