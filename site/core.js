@@ -12,162 +12,6 @@ var config = {
 	},
 	fightAbi: [
 		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "",
-					"type": "uint8"
-				}
-			],
-			"name": "challengesList",
-			"outputs": [
-				{
-					"name": "",
-					"type": "bytes32"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "",
-					"type": "address"
-				}
-			],
-			"name": "temporaryAddresses",
-			"outputs": [
-				{
-					"name": "",
-					"type": "address"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"name": "fights",
-			"outputs": [
-				{
-					"name": "player1CharID",
-					"type": "bytes32"
-				},
-				{
-					"name": "player2CharID",
-					"type": "bytes32"
-				},
-				{
-					"name": "player1GeneralAddress",
-					"type": "address"
-				},
-				{
-					"name": "player2GeneralAddress",
-					"type": "address"
-				},
-				{
-					"name": "player1TempAddress",
-					"type": "address"
-				},
-				{
-					"name": "player2TempAddress",
-					"type": "address"
-				},
-				{
-					"name": "stepNum",
-					"type": "uint256"
-				},
-				{
-					"name": "lastStepBlock",
-					"type": "uint256"
-				},
-				{
-					"name": "winner",
-					"type": "address"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"constant": false,
-			"inputs": [
-				{
-					"name": "ERC721",
-					"type": "address"
-				},
-				{
-					"name": "tokenID",
-					"type": "uint256"
-				},
-				{
-					"name": "tempAddress",
-					"type": "address"
-				}
-			],
-			"name": "searchFight",
-			"outputs": [],
-			"payable": false,
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "playerAction1",
-					"type": "uint256"
-				},
-				{
-					"name": "playerAction2",
-					"type": "uint256"
-				},
-				{
-					"name": "oponentAction1",
-					"type": "uint256"
-				},
-				{
-					"name": "oponentAction2",
-					"type": "uint256"
-				}
-			],
-			"name": "calculateDamage",
-			"outputs": [
-				{
-					"name": "",
-					"type": "uint8"
-				}
-			],
-			"payable": false,
-			"stateMutability": "pure",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [],
-			"name": "_fightsCount",
-			"outputs": [
-				{
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
 			"constant": false,
 			"inputs": [
 				{
@@ -218,89 +62,43 @@ var config = {
 			"type": "function"
 		},
 		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "",
-					"type": "bytes32"
-				}
-			],
-			"name": "chars",
-			"outputs": [
-				{
-					"name": "level",
-					"type": "uint8"
-				},
-				{
-					"name": "fightsCount",
-					"type": "uint256"
-				},
-				{
-					"name": "winsCount",
-					"type": "uint256"
-				},
-				{
-					"name": "fullHp",
-					"type": "uint8"
-				},
-				{
-					"name": "damage",
-					"type": "uint8"
-				},
-				{
-					"name": "fightId",
-					"type": "uint256"
-				},
-				{
-					"name": "currentHP",
-					"type": "uint8"
-				},
-				{
-					"name": "lastFihgtBlockNumber",
-					"type": "uint256"
-				}
-			],
+			"constant": false,
+			"inputs": [],
+			"name": "cancelSearch",
+			"outputs": [],
 			"payable": false,
-			"stateMutability": "view",
+			"stateMutability": "nonpayable",
 			"type": "function"
 		},
 		{
-			"constant": true,
+			"constant": false,
+			"inputs": [],
+			"name": "giveUp",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"constant": false,
 			"inputs": [
 				{
-					"name": "fightID",
+					"name": "ERC721",
+					"type": "address"
+				},
+				{
+					"name": "tokenID",
 					"type": "uint256"
 				},
 				{
-					"name": "stepNum",
-					"type": "uint256"
-				},
-				{
-					"name": "playerAction1",
-					"type": "uint256"
-				},
-				{
-					"name": "playerAction2",
-					"type": "uint256"
-				},
-				{
-					"name": "playerSalt",
-					"type": "string"
-				},
-				{
-					"name": "signature",
-					"type": "bytes"
-				}
-			],
-			"name": "checkAction",
-			"outputs": [
-				{
-					"name": "",
+					"name": "tempAddress",
 					"type": "address"
 				}
 			],
+			"name": "searchFight",
+			"outputs": [],
 			"payable": false,
-			"stateMutability": "pure",
+			"stateMutability": "nonpayable",
 			"type": "function"
 		},
 		{
@@ -358,9 +156,260 @@ var config = {
 			],
 			"name": "FightFinished",
 			"type": "event"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "_fightsCount",
+			"outputs": [
+				{
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "playerAction1",
+					"type": "uint256"
+				},
+				{
+					"name": "playerAction2",
+					"type": "uint256"
+				},
+				{
+					"name": "oponentAction1",
+					"type": "uint256"
+				},
+				{
+					"name": "oponentAction2",
+					"type": "uint256"
+				}
+			],
+			"name": "calculateDamage",
+			"outputs": [
+				{
+					"name": "",
+					"type": "uint8"
+				}
+			],
+			"payable": false,
+			"stateMutability": "pure",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "uint8"
+				}
+			],
+			"name": "challengesList",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bytes32"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "bytes32"
+				}
+			],
+			"name": "chars",
+			"outputs": [
+				{
+					"name": "level",
+					"type": "uint8"
+				},
+				{
+					"name": "fightsCount",
+					"type": "uint256"
+				},
+				{
+					"name": "winsCount",
+					"type": "uint256"
+				},
+				{
+					"name": "fullHp",
+					"type": "uint8"
+				},
+				{
+					"name": "damage",
+					"type": "uint8"
+				},
+				{
+					"name": "fightId",
+					"type": "uint256"
+				},
+				{
+					"name": "currentHP",
+					"type": "uint8"
+				},
+				{
+					"name": "lastFihgtBlockNumber",
+					"type": "uint256"
+				},
+				{
+					"name": "tokenId",
+					"type": "uint256"
+				},
+				{
+					"name": "tokenAddress",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "fightID",
+					"type": "uint256"
+				},
+				{
+					"name": "stepNum",
+					"type": "uint256"
+				},
+				{
+					"name": "playerAction1",
+					"type": "uint256"
+				},
+				{
+					"name": "playerAction2",
+					"type": "uint256"
+				},
+				{
+					"name": "playerSalt",
+					"type": "string"
+				},
+				{
+					"name": "signature",
+					"type": "bytes"
+				}
+			],
+			"name": "checkAction",
+			"outputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "pure",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "fights",
+			"outputs": [
+				{
+					"name": "player1CharID",
+					"type": "bytes32"
+				},
+				{
+					"name": "player2CharID",
+					"type": "bytes32"
+				},
+				{
+					"name": "player1GeneralAddress",
+					"type": "address"
+				},
+				{
+					"name": "player2GeneralAddress",
+					"type": "address"
+				},
+				{
+					"name": "player1TempAddress",
+					"type": "address"
+				},
+				{
+					"name": "player2TempAddress",
+					"type": "address"
+				},
+				{
+					"name": "stepNum",
+					"type": "uint256"
+				},
+				{
+					"name": "lastStepBlock",
+					"type": "uint256"
+				},
+				{
+					"name": "winner",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "ERC721",
+					"type": "address"
+				},
+				{
+					"name": "tokenID",
+					"type": "uint256"
+				}
+			],
+			"name": "genCharId",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bytes32"
+				}
+			],
+			"payable": false,
+			"stateMutability": "pure",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"name": "temporaryAddresses",
+			"outputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
 		}
 	],
-	fightContractAddress: "0x547e4F5eF8EaB99cdB50EAcf282dD224c1480595",
+	fightContractAddress: "0x0e4219Ec07C0E2245Dc6b3e48B7eDdD20a216787",
 	catContractAddress: "0x06012c8cf97BEaD5deAe237070F9587f8E7A266d"
 
 };
@@ -368,9 +417,10 @@ var config = {
 
 var skaleInstance;
 var fightAcc;
+var fightContract;
 var currentCharId;
 var chars;
-var subscriptionFightCreated;
+var myCharState;
 
 
 const core = {
@@ -378,9 +428,15 @@ const core = {
 		/**
 		 *
 		 * @param {string} providerName "MetaMask|Torus"
-		 * @param {Function} callback
+		 * @param {Function} callback "MetaMask|Torus"
 		 */
 		load: function (providerName, callback) {
+
+			var onReady = function () {
+				fightContract = window.fightContract = new skaleInstance.eth.Contract(config.fightAbi, config.fightContractAddress);
+				callback();
+			};
+
 			var loadScript = function (src, onLoad) {
 				var s = document.createElement('script');
 				s.setAttribute('src', src);
@@ -412,7 +468,7 @@ const core = {
 								console.warn('using toras:', isTorus);
 								sessionStorage.setItem('pageUsingTorus', 1);
 								torus.setProvider({host: config.skaleNetwork, networkName: 'skale'}).then(function () {
-									callback();
+									onReady();
 
 									//config.p2pConnectorUrl + "/discordSet"
 								});
@@ -421,8 +477,8 @@ const core = {
 								console.log('already auth');
 							});
 						}).catch(function (err) {
-							console.log('init err:', err);
-						});
+						console.log('init err:', err);
+					});
 
 				});
 
@@ -438,8 +494,7 @@ const core = {
 		 * @return {string}     //Имя аккаунта (одно на всех котов)
 		 */
 		nameGet: function () {
-			var name = "Vasya Pupkin";
-			return name;
+			return skaleInstance ? "hello" : null;
 		},
 		ownerAddressGet: function () {
 			return skaleInstance.eth.accounts.currentProvider.selectedAddress;
@@ -484,8 +539,8 @@ const core = {
 					})
 			}
 			else {
-			  callback(chars);
-      }
+				callback(chars);
+			}
 		},
 
 		/*
@@ -496,18 +551,68 @@ const core = {
 			localStorage.setItem('currentCharId', _charId);
 		},
 
+		infoGet: function (charId, callback) {
+			core.char.tokenIdGet(charId, function (tokenId) {
+				core.char.infoGetByTokenId(tokenId, callback);
+			});
+		},
+
+		infoGetByTokenId: function (tokenId, callback) {
+			fightContract.methods.chars(tokenId)
+				.call()
+				.then(function (info) {
+					var charId = info.tokenId;
+					axios.get(`https://api.cryptokitties.co/kitties/${charId}`)
+						.then(function (response) {
+							callback({
+								tokenId: tokenId,
+								name:       response.data.name,
+								imageUrl:   response.data.image_url,
+								currentHP:  +info.currentHP,
+								damage:     +info.damage,
+								fightId:    +info.fightId,
+								fightsCount: +info.fightsCount,
+								fullHp:     +info.fullHp,
+								lastFihgtBlockNumber: +info.lastFihgtBlockNumber,
+								level:      +info.level,
+								winsCount:  +info.winsCount
+							});
+						});
+				});
+		},
+
+		myInfoGet: function (callback) {
+			var myId = core.char.currentIdGet();
+			core.char.infoGet(myId, function(info) {
+				callback(info);
+			});
+		},
+
 		/*
-		 * @description Get currnt champ
+		 * @description Get current champ
 		 */
 		currentIdGet: function () {
 			return localStorage.getItem('currentCharId');
 		},
 
+		tokenIdGet: function (id, callback) {
+			fightContract.methods.genCharId(config.catContractAddress, id)
+				.call()
+				.then(function (response) {
+					callback(response);
+				});
+		},
+
 		/*
 		 * @description Get current player state (1 - not in fight, 2 - waiting fight, 3 - fighting process)
 		*/
-		stateGet: function () {
-
+		stateGet: function (callback) {
+			core.char.myInfoGet(function(charInfo) {
+				callback({
+					info: charInfo,
+					isFight: !!charInfo.fightId
+				});
+			})
 		}
 	},
 
@@ -515,42 +620,30 @@ const core = {
 		var onStart;
 		//var challengeInstance = new Web3(web3.currentProvider);
 
-
-
 		return {
 			/*
 			 * @description Создать заявку на бой
 			 * @return
 			 */
-			create: function (callback = () => {}) {
-				subscriptionFightCreated = skaleInstance.eth.subscribe('FightCreated', {
-					address: config.fightContractAddress,
-					topics: [null]
-				}, function (error, result) {
-					console.log('"FightCreated" event:', result, error);
-
-					if (error) {
-            callback(error);
-          }
-					else {
-						const eventObj = web3.eth.abi.decodeLog(
-              eventJsonInterface.inputs,
-              result.data,
-              result.topics.slice(1)
-            );
-
-            console.log(`New event "FightCreated"`, eventObj)
-
-            callback(error, eventObj);
-            onStart(eventObj);
-					}
-				});
-
+			create: function () {
+				var findFight;
 				fightAcc = skaleInstance.eth.accounts.create();
-				console.log('fightAcc:', fightAcc);
+				//console.log('fightAcc:', fightAcc);
 
-				var contract = new skaleInstance.eth.Contract(config.fightAbi, config.fightContractAddress);
-				contract.methods.searchFight(config.catContractAddress, +core.char.currentIdGet(), fightAcc.address).send({from: skaleInstance.eth.accounts.currentProvider.selectedAddress }).then(console.log);
+				fightContract.methods.searchFight(config.catContractAddress, +core.char.currentIdGet(), fightAcc.address).send({from: skaleInstance.eth.accounts.currentProvider.selectedAddress}).then(console.log);
+
+				findFight = function () {
+					core.char.myInfoGet(function (info) {
+						var fightId = +info.fightId;
+						if (fightId) {
+							//alert(info.fightId);
+							onStart();
+						} else {
+							setTimeout(findFight, 3000);
+						}
+					});
+				};
+				findFight();
 			},
 
 			/*
@@ -586,6 +679,42 @@ const core = {
 				}
 			},
 
+			infoGet: function (fightId, callback) {
+				console.log('fightId:', fightId);
+				fightContract.methods.fights(fightId)
+					.call()
+					.then(function (response) {
+						callback(response);
+					});
+			},
+
+			enemyCharInfoGet: function (callback) {
+				var playerNum, enemyNum;
+				var myInfo;
+				var infoGet = function (fightId) {
+					//console.log('fightId=', fightId);
+					core.challenge.infoGet(fightId, function (fightInfo) {
+						//console.log('fightInfo:', fightInfo);
+						if (myInfo.tokenId === fightInfo.player1CharID) {
+							playerNum = "player1";
+							enemyNum = "player2";
+						} else {
+							playerNum = "player2";
+							enemyNum = "player1";
+						}
+						var enemyCharUid = fightInfo[enemyNum + "CharID"];
+						core.char.infoGetByTokenId(enemyCharUid, callback);
+					});
+				};
+
+				core.char.myInfoGet(function (_myInfo) {
+					//console.log('myInfo:', _myInfo);
+					myInfo = _myInfo;
+					infoGet(myInfo.fightId);
+				});
+
+			},
+
 			/*
 			 * @description Возвращает состояние боя
 			 * return enum
@@ -594,9 +723,27 @@ const core = {
 			 *            3 - нужно отправить шифр
 			 *            4 - ожидаем шифр соперника
 			 */
-			stateGet: function () {
-				return state;
+			stateGet: function (callback) {
+				var charMy, charEnemy, fightState;
+				var onReady = function() {
+					callback({
+						fightState: fightState,
+						charMy: charMy,
+						charEnemy: charEnemy
+					});
+				};
+				core.char.myInfoGet(function(_charMy) {
+					charMy = _charMy;
+					if (_charMy.fightId) {
+						fightState = localStorage.getItem('fightState') || 1;
+					}
+					core.challenge.enemyCharInfoGet(function(_charEnemy) {
+						charEnemy = _charEnemy;
+						onReady();
+					});
+				});
 			},
+
 
 			onStageChange: function () {
 
