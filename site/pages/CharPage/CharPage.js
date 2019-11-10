@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import { useConnect, useReducers } from 'store'
 import request from 'request'
 import core from 'core'
@@ -56,54 +57,45 @@ const CharPage = ({ match: { params: { id: charId } } }) => {
     )
   }
 
-  return (
-    <Fragment>
-      <div className={s.charPage}>
-        <div className={s.content}>
-          <div className={s.leftCol}>
-            <CharImage src={data.image} /><br />
-            <Button to="/chars" color="blue">Select character</Button><br />
-            <Button onClick={handleFightClick}>FIGHT!</Button>
-          </div>
-          <div className={s.rightCol}>
-            <div className={s.headline}>
-              <div>
-                <div className={s.id}># 1344552</div>
-                <div className={s.name}>Foo</div>
-              </div>
-              <div>
+  const stats = [
+    { title: 'Games', value: '41' },
+    { title: 'Wins', value: '24' },
+    { title: 'Loses', value: '17' },
+    { title: 'Exp', value: '1387 <span>/ 2348</span>' },
+    { title: 'Hp', value: '105' },
+    { title: 'Strength', value: '12' },
+    { title: 'Vitality', value: '8' },
+  ]
 
-              </div>
-            </div>
-            <table className={s.table}>
-              <tbody>
-              <tr>
-                <td className={s.label}>OWNER:</td>
-                <td className={s.value}>0x0235235235235asfafaf66aa</td>
-              </tr>
-              <tr>
-                <td className={s.label}>LVL:</td>
-                <td className={s.value}>13</td>
-              </tr>
-              <tr>
-                <td className={s.label}>EXP:</td>
-                <td className={s.value}>1276 <span>/ 1300</span></td>
-              </tr>
-              <tr>
-                <td className={s.label}>HP:</td>
-                <td className={s.value}>15</td>
-              </tr>
-              <tr>
-                <td className={s.label}>WINS:</td>
-                <td className={s.value}>30</td>
-              </tr>
-              <tr>
-                <td className={s.label}>LOSES:</td>
-                <td className={s.value}>24</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+  return (
+    <div className={s.page}>
+      <div className={s.content}>
+        <div className={s.buttons}>
+          <Button className={s.button} onClick={handleFightClick}>FIGHT!</Button>
+          <Link className={s.backLink} to="/chars" color="blue">Change character</Link><br />
+        </div>
+        <div className={s.imageContainer}>
+          <div className={s.level}><span>LVL:</span> 13</div>
+          <CharImage className={s.image} src={data.image} />
+          <div className={s.name}>{name}</div>
+        </div>
+        <div className={s.info}>
+          <div className={s.comingSoon}>Coming Soon</div>
+          <table className={s.stats}>
+            <tbody>
+              {
+                stats.map(({ title, value }, index) => {
+
+                  return (
+                    <tr key={index}>
+                      <td><span className={s.statTitle}>{title}</span></td>
+                      <td><span className={s.statValue} dangerouslySetInnerHTML={{ __html: value }}></span></td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
         </div>
       </div>
       {
@@ -111,7 +103,7 @@ const CharPage = ({ match: { params: { id: charId } } }) => {
           <OpponentSearching />
         )
       }
-    </Fragment>
+    </div>
   )
 }
 
