@@ -417,15 +417,17 @@ var config = {
 
 var skaleInstance;
 var fightAcc;
+var fightAccEvent;
 var fightContract;
 var currentCharId;
 var chars;
 var myCharState;
+var fightId;
 
 
 const core = {
-	provider: (() => {
-		let onConnect
+	provider: (function () {
+		var onConnect;
 
 		return {
 			/**
@@ -466,7 +468,7 @@ const core = {
 					skaleInstance = window.skaleInstance = new Web3(config.skaleNetwork);
 					ethereum.autoRefreshOnNetworkChange = true;
 					ethereum.send('eth_requestAccounts');
-					callback();
+					onReady();
 				}
 				else if (providerName === 'Torus') {
 					console.log('initing Torus');
@@ -482,7 +484,10 @@ const core = {
 										console.log('skaleInstance:', skaleInstance);
 										console.warn('using toras:', isTorus);
 										sessionStorage.setItem('pageUsingTorus', 1);
-										torus.setProvider({host: config.skaleNetwork, networkName: 'skale'}).then(function () {
+										torus.setProvider({
+											host: config.skaleNetwork,
+											networkName: 'skale'
+										}).then(function () {
 											onReady();
 
 											//config.p2pConnectorUrl + "/discordSet"
@@ -500,9 +505,9 @@ const core = {
 				}
 			},
 
-			onConnect: (_onConnect) => {
-				onConnect = _onConnect
-			},
+			onConnect: function(_onConnect) {
+				onConnect = _onConnect;
+		}
 		}
 	})(),
 
@@ -528,11 +533,8 @@ const core = {
 		 * @description Get list of all champions
 		 * @params [
 		 *      {
-		 *          charId: '123456',
+		 *          id: '123456',
 		 *          type: 'cryptokitties',
-		 *          level:      1,
-		 *          hp:         10,
-		 *          strength:   5,
 		 *          name:   'pussyCat',
 		 *          image: string
 		 *      }
@@ -549,7 +551,8 @@ const core = {
 							chars.push({
 								id: val.id,
 								name: val.name,
-								image: val.image_url
+								image: val.image_url,
+								type: 'cryptokitties'
 							});
 						});
 						callback(chars);
@@ -604,7 +607,7 @@ const core = {
 
 		myInfoGet: function (callback) {
 			var myId = core.char.currentIdGet();
-			core.char.infoGet(myId, function(info) {
+			core.char.infoGet(myId, function (info) {
 				callback(info);
 			});
 		},
@@ -628,7 +631,7 @@ const core = {
 		 * @description Get current player state (1 - not in fight, 2 - waiting fight, 3 - fighting process)
 		*/
 		stateGet: function (callback) {
-			core.char.myInfoGet(function(charInfo) {
+			core.char.myInfoGet(function (charInfo) {
 				callback({
 					info: charInfo,
 					isFight: !!charInfo.fightId
@@ -639,33 +642,36 @@ const core = {
 
 	challengeRequest: (function () {
 		var onStart;
-		//var challengeInstance = new Web3(web3.currentProvider);
 
 		return {
 			/*
 			 * @description Создать заявку на бой
 			 * @return
 			 */
-			create: function (callback) {
+			p2pSubscribe: function () {
+				if (!fightAcc) {
+					fightAcc = skaleInstance.eth.accounts.privateKeyToAccount(localStorage.getItem("fightAcc_privateKey"));
+				}
+				if (fightAcc) {
+					fightAccEvent = new EventSource(config.p2pConnectorUrl + '/p2p/events/' + fightAcc.address);
+				}
+			},
+
+			create: function () {
 				var findFight;
 				fightAcc = skaleInstance.eth.accounts.create();
-				// console.log('fightAcc:', fightAcc);
+
+				localStorage.setItem("fightAcc_privateKey", fightAcc.privateKey);
 
 				fightContract.methods.searchFight(config.catContractAddress, +core.char.currentIdGet(), fightAcc.address).send({from: skaleInstance.eth.accounts.currentProvider.selectedAddress}).then(console.log);
+
+				core.challengeRequest.p2pSubscribe();
 
 				findFight = function () {
 					core.char.myInfoGet(function (info) {
 						var fightId = +info.fightId;
 						if (fightId) {
-							// alert(info.fightId);
-
-							if (typeof callback === 'function') {
-								callback();
-							}
-
-							if (typeof onStart === 'function') {
-								onStart();
-							}
+							if (onStart) {onStart()};
 						} else {
 							setTimeout(findFight, 3000);
 						}
@@ -693,6 +699,7 @@ const core = {
 
 	challenge: (function () {
 		var state = 1;
+
 		var challenge = {
 			/*
 			 * @description Сделать ход
@@ -700,21 +707,34 @@ const core = {
 			 * @params action2 {number}     // 4-защита головы, 5-защита живота, 6-защита хвоста
 			 */
 			action: function (action1, action2) {
-				var state = core.challenge.stateGet();
+
+				core.challenge.fightParamsGet();
+
+				//var state = core.challenge.fightStatusGet();
 				if (state === 1) {
 					state = 2;
+					//core.challenge.p2pActionSend({});
 				} else {
 					state = 1;
 				}
 			},
 
-			infoGet: function (fightId, callback) {
-				console.log('fightId:', fightId);
+			fightParamsGet: function(fightId, callback) {
 				fightContract.methods.fights(fightId)
 					.call()
 					.then(function (response) {
 						callback(response);
 					});
+			},
+
+			infoGet: function (fightId, callback) {
+				console.log('fightId:', fightId);
+				if (!fightId) {
+					core.char.myInfoGet(function (_myInfo) {
+						//console.log('myInfo:', _myInfo);
+						core.challenge.fightParamsGet(_myInfo.fightId, callback);
+					});
+				}
 			},
 
 			enemyCharInfoGet: function (callback) {
@@ -744,6 +764,10 @@ const core = {
 
 			},
 
+			fightStatusGet: function () {
+				return localStorage.getItem('fightState') || 1;
+			},
+
 			/*
 			 * @description Возвращает состояние боя
 			 * return enum
@@ -754,19 +778,19 @@ const core = {
 			 */
 			stateGet: function (callback) {
 				var charMy, charEnemy, fightState;
-				var onReady = function() {
+				var onReady = function () {
 					callback({
 						fightState: fightState,
 						charMy: charMy,
 						charEnemy: charEnemy
 					});
 				};
-				core.char.myInfoGet(function(_charMy) {
+				core.char.myInfoGet(function (_charMy) {
 					charMy = _charMy;
 					if (_charMy.fightId) {
-						fightState = localStorage.getItem('fightState') || 1;
+						fightState = status.fightStatusGet();
 					}
-					core.challenge.enemyCharInfoGet(function(_charEnemy) {
+					core.challenge.enemyCharInfoGet(function (_charEnemy) {
 						charEnemy = _charEnemy;
 						onReady();
 					});
@@ -774,8 +798,14 @@ const core = {
 			},
 
 
-			onStateChange: function () {
+			onStateChange: function (handler) {
 
+			},
+
+			p2pActionSend: function(data, callback) {
+				axios.post(config.p2pConnectorUrl + '/send', data).then(function (response) {
+					callback(response);
+				});
 			}
 		};
 		return challenge;
