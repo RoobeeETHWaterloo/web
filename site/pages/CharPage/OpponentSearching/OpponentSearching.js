@@ -19,7 +19,7 @@ const OpponentSearching = ({ history }) => {
   useEffect(() => {
     fight.setSearching(true)
 
-    core.challengeRequest.create(() => {
+    core.challengeRequest.onStart(() => {
       const { fightState, charMy, charEnemy } = core.challenge.stateGet()
 
       console.log(5555, { fightState, charMy, charEnemy })
@@ -48,6 +48,8 @@ const OpponentSearching = ({ history }) => {
 
       history.push('/brawl')
     })
+
+    core.challengeRequest.create()
   }, [])
 
   return (
