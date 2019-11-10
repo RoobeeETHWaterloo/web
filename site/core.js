@@ -642,10 +642,10 @@ const core = {
 			 * @description Создать заявку на бой
 			 * @return
 			 */
-			create: function () {
+			create: function (callback) {
 				var findFight;
 				fightAcc = skaleInstance.eth.accounts.create();
-				//console.log('fightAcc:', fightAcc);
+				// console.log('fightAcc:', fightAcc);
 
 				fightContract.methods.searchFight(config.catContractAddress, +core.char.currentIdGet(), fightAcc.address).send({from: skaleInstance.eth.accounts.currentProvider.selectedAddress}).then(console.log);
 
@@ -653,13 +653,21 @@ const core = {
 					core.char.myInfoGet(function (info) {
 						var fightId = +info.fightId;
 						if (fightId) {
-							//alert(info.fightId);
-							onStart();
+							// alert(info.fightId);
+
+              if (typeof callback === 'function') {
+                callback();
+              }
+
+							if (typeof onStart === 'function') {
+                onStart();
+              }
 						} else {
 							setTimeout(findFight, 3000);
 						}
 					});
 				};
+
 				findFight();
 			},
 

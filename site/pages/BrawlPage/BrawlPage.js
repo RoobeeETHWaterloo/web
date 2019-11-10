@@ -19,26 +19,26 @@ const BrawlPage = () => {
 
   }, [])
 
-  if (pendingOpponent) {
-    return (
-      <div className={s.page}>
-        <OpponentWaiting />
-      </div>
-    )
-  }
+  // if (pendingOpponent) {
+  //   return (
+  //     <div className={s.page}>
+  //       <OpponentWaiting />
+  //     </div>
+  //   )
+  // }
 
-  if (!isSearching && !data) {
-    return (
-      <div className={s.page}>
-        <NoItems
-          title="You don't have active fights"
-          subTitle={(
-            <div>Start from <Link to="/chars">selecting</Link> a character you'd like to fight!</div>
-          )}
-        />
-      </div>
-    )
-  }
+  // if (!isSearching && !data) {
+  //   return (
+  //     <div className={s.page}>
+  //       <NoItems
+  //         title="You don't have active fights"
+  //         subTitle={(
+  //           <div>Start from <Link to="/chars">selecting</Link> a character you'd like to fight!</div>
+  //         )}
+  //       />
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className={s.page}>

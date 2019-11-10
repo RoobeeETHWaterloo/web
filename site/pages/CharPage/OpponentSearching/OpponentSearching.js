@@ -18,17 +18,20 @@ const OpponentSearching = ({ history }) => {
 
   useEffect(() => {
     fight.setSearching(true)
-    // core.challengeRequest()
 
-    // core.challengeRequest.onStart((event) => {
-    //   console.log(444, event)
-    //
-    //   history.push('/brawl')
-    // })
+    core.challengeRequest.create(() => {
+      const { fightState, charMy, charEnemy } = core.challenge.stateGet()
 
-    setTimeout(() => {
-      fight.setPendingOpponent({})
-    }, 2000)
+      console.log(5555, { fightState, charMy, charEnemy })
+
+      fight.setData({
+        ...fightState,
+        me: charMy,
+        opponent: charEnemy,
+      })
+
+      history.push('/brawl')
+    })
   }, [])
 
   return (

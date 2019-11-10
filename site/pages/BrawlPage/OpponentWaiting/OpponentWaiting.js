@@ -9,7 +9,7 @@ import s from './OpponentWaiting.scss'
 
 const OpponentWaiting = () => (
   <div className={s.content}>
-    <Countdown time={60}>
+    <Countdown time={10}>
       {
         ({ value }) => (
           <Fragment>
