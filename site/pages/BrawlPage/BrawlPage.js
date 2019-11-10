@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import core from 'core'
 
 import Button from 'components/ui/Button/Button'
 
@@ -25,18 +26,8 @@ const attackActions = [
 ]
 
 
-const BrawlPage = () => {
-  const [ playerValues, setPlayerValues ] = useState({
-    self: { name: 'TinkyWinky', image: 'https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/1720283.svg', hp: 15 },
-    opponent: { name: 'WizzyPizzy', image: 'https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/1720012.svg', hp: 15 },
-  })
-
-  const [ selfActions, setSelfActions ]         = useState({ defense: [], attack: [] })
-  const [ opponentActions, setOpponentActions ] = useState({ defense: [], attack: [] })
-
-  const { self, opponent } = playerValues
-
-  const handleActionsSelect = useCallback((value) => {
+const useActionsSelectHandler = ({ selfActions, setSelfActions }) => {
+  return useCallback((value) => {
     const { defense, attack } = selfActions
     let isItemExists
 
@@ -135,6 +126,24 @@ const BrawlPage = () => {
       }
     }
   }, [ selfActions ])
+}
+
+const BrawlPage = () => {
+  const [ playerValues, setPlayerValues ] = useState({
+    self: { name: 'TinkyWinky', image: 'https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/1720283.svg', hp: 15 },
+    opponent: { name: 'WizzyPizzy', image: 'https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/1720012.svg', hp: 15 },
+  })
+
+  const [ selfActions, setSelfActions ]         = useState({ defense: [], attack: [] })
+  const [ opponentActions, setOpponentActions ] = useState({ defense: [], attack: [] })
+
+  useEffect(() => {
+    // core.challenge.stateGet()
+
+
+  }, [])
+
+  const handleActionsSelect = useActionsSelectHandler({ selfActions, opponentActions, setSelfActions })
 
   const handleReadyClick = useCallback(() => {
     const attackStrength  = 2

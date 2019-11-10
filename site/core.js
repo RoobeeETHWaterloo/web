@@ -522,24 +522,29 @@ const core = {
 			 * @description Создать заявку на бой
 			 * @return
 			 */
-			create: function () {
-				/*
+			create: function (callback = () => {}) {
 				subscriptionFightCreated = skaleInstance.eth.subscribe('FightCreated', {
 					address: config.fightContractAddress,
 					topics: [null]
 				}, function (error, result) {
-					console.log('result:', result, error);
-					if (!error) {
-						/*				const eventObj = web3.eth.abi.decodeLog(
-											eventJsonInterface.inputs,
-											result.data,
-											result.topics.slice(1)
-										);
-										console.log(`New ${eventName}!`, eventObj)
-										//* /
+					console.log('"FightCreated" event:', result, error);
+
+					if (error) {
+            callback(error);
+          }
+					else {
+						const eventObj = web3.eth.abi.decodeLog(
+              eventJsonInterface.inputs,
+              result.data,
+              result.topics.slice(1)
+            );
+
+            console.log(`New event "FightCreated"`, eventObj)
+
+            callback(error, eventObj);
+            onStart(eventObj);
 					}
 				});
-				*/
 
 				fightAcc = skaleInstance.eth.accounts.create();
 				console.log('fightAcc:', fightAcc);

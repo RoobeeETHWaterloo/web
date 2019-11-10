@@ -1,3 +1,7 @@
+.headerContainer {
+  margin-bottom: 60px;
+}
+
 .header {
   height: 80px;
   display: flex;
@@ -5,7 +9,6 @@
   z-index: 20;
   align-items: center;
   background-color: #fff;
-  margin-bottom: 60px;
   box-shadow: rgba(#8c6c6c, 0.21) 0 2px 3px;
 }
 
@@ -17,4 +20,16 @@
 .logo {
   width: 220px;
   display: block;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+  margin-top: -106px;
+  transition: margin-top 0.2s ease-out;
+
+  &.visible {
+    margin-top: 0;
+  }
 }

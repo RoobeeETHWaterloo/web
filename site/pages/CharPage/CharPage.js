@@ -17,8 +17,7 @@ const CharPage = ({ match: { params: { id: charId } } }) => {
     data: items ? items.find((char) => Number(char.id) === Number(charId)) : null,
   }), [ charId ])
 
-  const { chars } = useReducers()
-  const [ isSearching, setSearchingStatus ] = useState(false)
+  const { chars, fight } = useReducers()
 
   useEffect(() => {
     if (!data) {
@@ -40,7 +39,8 @@ const CharPage = ({ match: { params: { id: charId } } }) => {
   }, [ data ])
 
   const handleFightClick = useCallback(() => {
-    setSearchingStatus(true)
+    fight.setSearching(true)
+    core.challengeRequest()
   }, [])
 
   if (!isFetched && (!data || isFetching)) {
@@ -51,14 +51,6 @@ const CharPage = ({ match: { params: { id: charId } } }) => {
 
   return (
     <div className={s.charPage}>
-      {
-        isSearching && (
-          <Fragment>
-            <ContentSpinner />
-            Searching for opponent!
-          </Fragment>
-        )
-      }
       <div className={s.content}>
         <div className={s.leftCol}>
           <CharImage src={data.image} /><br />
