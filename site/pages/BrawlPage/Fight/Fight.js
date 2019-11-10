@@ -149,15 +149,24 @@ const BrawlPage = () => {
     const action = [ ...selfActions.attack, ...selfActions.defense ]
 
     if (action.length === 2) {
-      setUIBlockingStatus(true)
-      core.challenge.action(...action)
+      if (Cookies.get('testacc')) {
+        const params = [
+          6, 1, 1, 2, 2, 4, "aaa", "bbb",
+          "0xfd17c2cc3bdd79d7d88f9363edda1632961c7d31a9aacc6e8f0baa7c4fff0ab85ef2ac0e2aa65b903ce7d4694800440e47324e959a5faba214d9adfd56ee623600",
+          "0xe3ae2e895692a44d1743f721acc95851846c17ab7de6d3e305c878d6ae14bf655dfa18c2211a3bdd0211c948e9eb9aec56c55c55cfa27478d63741326165919f01",
+        ]
+
+        setUIBlockingStatus(true)
+        // core.challenge.action(...action)
+        core.challenge.action2(...params)
+      }
 
       core.challenge.onStateChange(() => {
         setUIBlockingStatus(false)
 
         const attackStrength = 2
 
-        const opponentActions = { attack: [ 1 ], defense: [ 4 ] }
+        const opponentActions = { attack: [ 1 ], defense: [ 2 ] }
         const newSelfHp       = self.hp - opponentActions.attack.filter((attack) => !selfActions.defense.map((v) => v - 3).includes(attack)).length * attackStrength
         const newOpponentHp   = opponent.hp - selfActions.attack.filter((attack) => !opponentActions.defense.map((v) => v + 3).includes(attack)).length * attackStrength
 

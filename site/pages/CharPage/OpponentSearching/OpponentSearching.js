@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useConnect, useReducers } from 'store'
+import Cookies from 'js-cookie'
 import core from 'core'
 
 import Spinner from 'components/ui/Spinner/Spinner'
@@ -59,7 +60,17 @@ const OpponentSearching = ({ history }) => {
       })
     })
 
-    core.challengeRequest.create()
+    const mockParams = Cookies.get('testacc') ? [
+      'x06012c8cf97bead5deae237070f9587f8e7a266d',
+      22,
+      '0x07E691eceaFD6F6571BA296C69A775C186C274b7',
+    ] : [
+      '0x06012c8cf97bead5deae237070f9587f8e7a266d',
+      33,
+      '0xa085aeC2c42D3f68C1c1484661EBa58514cbDD2E',
+    ]
+
+    core.challengeRequest.create(mockParams)
   }, [])
 
   return (

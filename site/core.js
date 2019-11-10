@@ -662,7 +662,7 @@ const core = {
 				}
 			},
 
-			create: function () {
+			create: function (_params) {
 				var findFight;
 				fightAcc = skaleInstance.eth.accounts.create();
 
@@ -683,7 +683,12 @@ const core = {
 
 				findFight();
 
-				fightContract.methods.searchFight(config.catContractAddress, +core.char.currentIdGet(), fightAcc.address).send({from: skaleInstance.eth.accounts.currentProvider.selectedAddress}).then(console.log);
+				var params = _params || [ config.catContractAddress, +core.char.currentIdGet(), fightAcc.address ]
+
+				fightContract.methods.searchFight(...params).send({
+					from: skaleInstance.eth.accounts.currentProvider.selectedAddress,
+				})
+					.then(console.log);
 			},
 
 			/*
@@ -712,7 +717,6 @@ const core = {
 			 * @params action2 {number}     // 4-защита головы, 5-защита живота, 6-защита хвоста
 			 */
 			action: function (action1, action2) {
-
 				var status = core.challenge.fightStatusGet();
 				console.log('status:', status);
 
@@ -727,8 +731,14 @@ const core = {
 						state = 1;
 					}
 				});
-
 			},
+
+      action2: (params) => {
+			  fightContract.methos.actionSet(...params).send({
+          from: skaleInstance.eth.accounts.currentProvider.selectedAddress,
+        })
+          .then(console.log);
+      },
 
 			fightIdGet: function(callback) {
 				core.char.myInfoGet(function(info) {
