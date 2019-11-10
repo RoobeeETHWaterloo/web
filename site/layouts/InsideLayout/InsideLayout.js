@@ -1,8 +1,6 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import core from 'core'
-
-import Header from 'layouts/Header/Header'
 
 
 const InsideLayout = ({ children, history }) => {
@@ -18,12 +16,7 @@ const InsideLayout = ({ children, history }) => {
     return null
   }
 
-  return (
-    <Fragment>
-      <Header />
-      {children}
-    </Fragment>
-  )
+  return children
 }
 
 

@@ -1,7 +1,5 @@
 import React from 'react'
 
-import Header from 'layouts/Header/Header'
-
 import Hero from './Hero/Hero'
 import Usage from './Usage/Usage'
 import Platforms from './Platforms/Platforms'
@@ -13,7 +11,6 @@ import WithLove from './WithLove/WithLove'
 
 const HomePage = () => (
   <div>
-    <Header />
     <Hero />
     <Usage />
     <Platforms />

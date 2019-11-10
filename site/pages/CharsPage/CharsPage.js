@@ -16,7 +16,7 @@ const CharsPage = () => {
   const { chars } = useReducers()
 
   const title     = items && items.length ? 'Choose your fighter' : 'No fighters found'
-  const subTitle  = items && items.length ? 'And start fighting' : 'Whoooohooo'
+  const subTitle  = items && items.length ? 'choose your destiny(if you like MK)' : 'Whoooohooo'
 
   useEffect(() => {
     if (!isFetched) {

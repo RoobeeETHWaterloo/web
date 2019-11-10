@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import core from 'core'
 
 import Spinner from 'components/ui/Spinner/Spinner'
+import Header from 'layouts/Header/Header'
 
 import s from './App.scss'
 
@@ -33,6 +34,7 @@ const App = ({ children }) => {
 
   return (
     <div>
+      <Header />
       {children}
     </div>
   )
