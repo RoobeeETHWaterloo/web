@@ -12,6 +12,162 @@ var config = {
 	},
 	fightAbi: [
 		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "uint8"
+				}
+			],
+			"name": "challengesList",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bytes32"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"name": "temporaryAddresses",
+			"outputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "fights",
+			"outputs": [
+				{
+					"name": "player1CharID",
+					"type": "bytes32"
+				},
+				{
+					"name": "player2CharID",
+					"type": "bytes32"
+				},
+				{
+					"name": "player1GeneralAddress",
+					"type": "address"
+				},
+				{
+					"name": "player2GeneralAddress",
+					"type": "address"
+				},
+				{
+					"name": "player1TempAddress",
+					"type": "address"
+				},
+				{
+					"name": "player2TempAddress",
+					"type": "address"
+				},
+				{
+					"name": "stepNum",
+					"type": "uint256"
+				},
+				{
+					"name": "lastStepBlock",
+					"type": "uint256"
+				},
+				{
+					"name": "winner",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "ERC721",
+					"type": "address"
+				},
+				{
+					"name": "tokenID",
+					"type": "uint256"
+				},
+				{
+					"name": "tempAddress",
+					"type": "address"
+				}
+			],
+			"name": "searchFight",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "playerAction1",
+					"type": "uint256"
+				},
+				{
+					"name": "playerAction2",
+					"type": "uint256"
+				},
+				{
+					"name": "oponentAction1",
+					"type": "uint256"
+				},
+				{
+					"name": "oponentAction2",
+					"type": "uint256"
+				}
+			],
+			"name": "calculateDamage",
+			"outputs": [
+				{
+					"name": "",
+					"type": "uint8"
+				}
+			],
+			"payable": false,
+			"stateMutability": "pure",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "_fightsCount",
+			"outputs": [
+				{
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
 			"constant": false,
 			"inputs": [
 				{
@@ -62,25 +218,89 @@ var config = {
 			"type": "function"
 		},
 		{
-			"constant": false,
+			"constant": true,
 			"inputs": [
 				{
-					"name": "ERC721",
-					"type": "address"
+					"name": "",
+					"type": "bytes32"
+				}
+			],
+			"name": "chars",
+			"outputs": [
+				{
+					"name": "level",
+					"type": "uint8"
 				},
 				{
-					"name": "tokenID",
+					"name": "fightsCount",
 					"type": "uint256"
 				},
 				{
-					"name": "tempAddress",
+					"name": "winsCount",
+					"type": "uint256"
+				},
+				{
+					"name": "fullHp",
+					"type": "uint8"
+				},
+				{
+					"name": "damage",
+					"type": "uint8"
+				},
+				{
+					"name": "fightId",
+					"type": "uint256"
+				},
+				{
+					"name": "currentHP",
+					"type": "uint8"
+				},
+				{
+					"name": "lastFihgtBlockNumber",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "fightID",
+					"type": "uint256"
+				},
+				{
+					"name": "stepNum",
+					"type": "uint256"
+				},
+				{
+					"name": "playerAction1",
+					"type": "uint256"
+				},
+				{
+					"name": "playerAction2",
+					"type": "uint256"
+				},
+				{
+					"name": "playerSalt",
+					"type": "string"
+				},
+				{
+					"name": "signature",
+					"type": "bytes"
+				}
+			],
+			"name": "checkAction",
+			"outputs": [
+				{
+					"name": "",
 					"type": "address"
 				}
 			],
-			"name": "searchFight",
-			"outputs": [],
 			"payable": false,
-			"stateMutability": "nonpayable",
+			"stateMutability": "pure",
 			"type": "function"
 		},
 		{
@@ -138,215 +358,9 @@ var config = {
 			],
 			"name": "FightFinished",
 			"type": "event"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "playerAction1",
-					"type": "uint256"
-				},
-				{
-					"name": "playerAction2",
-					"type": "uint256"
-				},
-				{
-					"name": "oponentAction1",
-					"type": "uint256"
-				},
-				{
-					"name": "oponentAction2",
-					"type": "uint256"
-				}
-			],
-			"name": "calculateDamage",
-			"outputs": [
-				{
-					"name": "",
-					"type": "uint8"
-				}
-			],
-			"payable": false,
-			"stateMutability": "pure",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "",
-					"type": "uint8"
-				}
-			],
-			"name": "challengesList",
-			"outputs": [
-				{
-					"name": "",
-					"type": "bytes32"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "",
-					"type": "bytes32"
-				}
-			],
-			"name": "chars",
-			"outputs": [
-				{
-					"name": "level",
-					"type": "uint8"
-				},
-				{
-					"name": "fightsCount",
-					"type": "uint256"
-				},
-				{
-					"name": "winsCount",
-					"type": "uint256"
-				},
-				{
-					"name": "fullHp",
-					"type": "uint8"
-				},
-				{
-					"name": "damage",
-					"type": "uint8"
-				},
-				{
-					"name": "fightId",
-					"type": "uint256"
-				},
-				{
-					"name": "currentHP",
-					"type": "uint8"
-				},
-				{
-					"name": "lastFihgtBlockNumber",
-					"type": "uint256"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "",
-					"type": "bytes32"
-				}
-			],
-			"name": "charsTopPlayer",
-			"outputs": [
-				{
-					"name": "",
-					"type": "address"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "fightID",
-					"type": "uint256"
-				},
-				{
-					"name": "stepNum",
-					"type": "uint256"
-				},
-				{
-					"name": "playerAction1",
-					"type": "uint256"
-				},
-				{
-					"name": "playerAction2",
-					"type": "uint256"
-				},
-				{
-					"name": "playerSalt",
-					"type": "string"
-				},
-				{
-					"name": "signature",
-					"type": "bytes"
-				}
-			],
-			"name": "checkAction",
-			"outputs": [
-				{
-					"name": "",
-					"type": "address"
-				}
-			],
-			"payable": false,
-			"stateMutability": "pure",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"name": "fights",
-			"outputs": [
-				{
-					"name": "player1CharID",
-					"type": "bytes32"
-				},
-				{
-					"name": "player2CharID",
-					"type": "bytes32"
-				},
-				{
-					"name": "player1GeneralAddress",
-					"type": "address"
-				},
-				{
-					"name": "player2GeneralAddress",
-					"type": "address"
-				},
-				{
-					"name": "player1TempAddress",
-					"type": "address"
-				},
-				{
-					"name": "player2TempAddress",
-					"type": "address"
-				},
-				{
-					"name": "stepNum",
-					"type": "uint256"
-				},
-				{
-					"name": "lastStepBlock",
-					"type": "uint256"
-				},
-				{
-					"name": "winner",
-					"type": "address"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
 		}
 	],
-	fightContractAddress: "0x7C9B06693030F136853F55cCB2806cb62063E4dA",
+	fightContractAddress: "0x547e4F5eF8EaB99cdB50EAcf282dD224c1480595",
 	catContractAddress: "0x06012c8cf97BEaD5deAe237070F9587f8E7A266d"
 
 };
