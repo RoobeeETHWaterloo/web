@@ -3,6 +3,7 @@ import axios from 'axios'
 
 
 var config = {
+	p2pConnectorUrl: "https://cryptobrawl.online",
 	skaleNetwork: "https://sip1.skalenodes.com:10051",
 	mainNetwork: "mainnet",
 	providers: {
@@ -381,7 +382,7 @@ const core = {
 				skaleInstance = window.skaleInstance = new Web3(config.skaleNetwork);
 				ethereum.autoRefreshOnNetworkChange = true;
 				ethereum.send('eth_requestAccounts');
-
+				callback();
 
 			} else if (providerName === 'Torus') {
 				console.log('initing Torus');
@@ -396,11 +397,12 @@ const core = {
 								console.log('skaleInstance:', skaleInstance);
 								console.warn('using toras:', isTorus);
 								sessionStorage.setItem('pageUsingTorus', 1);
-								torus.setProvider({host: config.skaleNetwork}).then(function () {
+								torus.setProvider({host: config.skaleNetwork, networkName: 'skale'}).then(function () {
 									callback();
+
+									//config.p2pConnectorUrl + "/discordSet"
 								});
 
-								//torus.ethereum.enable();
 							}).catch(function () {
 								console.log('already auth');
 							});
@@ -529,7 +531,7 @@ const core = {
 				console.log('fightAcc:', fightAcc);
 
 				var contract = new skaleInstance.eth.Contract(config.fightAbi, config.fightContractAddress);
-				contract.methods.searchFight(config.catContractAddress, core.char.currentIdGet(), fightAcc.address).send({from: skaleInstance.eth.accounts.currentProvider.selectedAddress }).then(console.log);
+				contract.methods.searchFight(config.catContractAddress, +core.char.currentIdGet(), fightAcc.address).send({from: skaleInstance.eth.accounts.currentProvider.selectedAddress }).then(console.log);
 			},
 
 			/*
