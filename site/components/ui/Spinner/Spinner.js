@@ -1,12 +1,13 @@
 import React from 'react'
+import cx from 'classnames'
 
 import s from './Spinner.scss'
 
 
-const Spinner = () => (
-  <div className={s.spinner}>
-    <div />
-    <div />
+const Spinner = ({ className, big }) => (
+  <div className={cx(s.spinner, className, { [s.big]: big, [s.standard]: !big })}>
+    <div className={s.circle} />
+    <div className={s.circle} />
   </div>
 )
 

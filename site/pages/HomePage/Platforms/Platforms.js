@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
+import { withRouter } from 'react-router-dom'
+import cx from 'classnames'
+import core from 'core'
 
 import Section from 'pages/HomePage/components/Section/Section'
 import SectionTitle from 'pages/HomePage/components/SectionTitle/SectionTitle'
+import Spinner from 'components/ui/Spinner/Spinner'
 
 import s from './Platforms.scss'
 
@@ -10,29 +14,58 @@ import torusImage from './images/torus.png'
 
 
 const items = [
-  { image: metamaskImage, title: 'Sign up with metamask' },
-  { image: torusImage, title: 'Sign up with Torus' },
+  { image: metamaskImage, title: 'Sign up with metamask', provider: 'MetaMask' },
+  { image: torusImage, title: 'Sign up with Torus', provider: 'Torus' },
 ]
 
-const Platforms = () => (
-  <Section>
-    <SectionTitle>We provide interoperability between NFT Platforms</SectionTitle>
-    <div className={s.items}>
-      {
-        items.map(({ image, title }, index) => (
-          <div key={index} className={s.itemContainer}>
-            <div className={s.item}>
-              <div className={s.imageContainer}>
-                <img className={s.itemImage} src={image} alt="" />
+const Platforms = ({ history }) => {
+  const [ { isFetching, selectedProvider }, setState ] = useState({ isFetching: false, selectedProvider: null })
+
+  const handleProviderClick = useCallback((provider) => {
+    if (!isFetching) {
+      setState({ isFetching: true, selectedProvider: provider })
+
+      setTimeout(() => {
+        core.provider.load(provider, () => {
+          history.push('/chars')
+        })
+      }, 1500)
+    }
+  }, [ isFetching ])
+
+  return (
+    <Section>
+      <SectionTitle>We provide interoperability between NFT Platforms</SectionTitle>
+      <div className={s.items}>
+        {
+          items.map(({ image, title, provider }, index) => {
+            const itemClassName = cx(s.item, {
+              [s.active]: provider === selectedProvider,
+              [s.disabled]: isFetching && provider !== selectedProvider,
+            })
+
+            return (
+              <div key={index} className={s.itemContainer}>
+                <div className={itemClassName} onClick={() => handleProviderClick(provider)}>
+                  <div className={s.imageContainer}>
+                    <img className={s.itemImage} src={image} alt="" />
+                  </div>
+                  {
+                    (isFetching && provider === selectedProvider) ? (
+                      <div className={s.itemTitle}>Loading <Spinner className={s.spinner} /> Please wait</div>
+                    ) : (
+                      <div className={s.itemTitle}>{title}</div>
+                    )
+                  }
+                </div>
               </div>
-              <div className={s.itemTitle}>{title}</div>
-            </div>
-          </div>
-        ))
-      }
-    </div>
-  </Section>
-)
+            )
+          })
+        }
+      </div>
+    </Section>
+  )
+}
 
 
-export default Platforms
+export default withRouter(Platforms)

@@ -7,7 +7,7 @@ import s from './ContentSpinner.scss'
 
 const ContentSpinner = () => (
   <div className={s.content}>
-    <Spinner />
+    <Spinner big />
   </div>
 )
 

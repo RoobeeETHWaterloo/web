@@ -378,7 +378,7 @@ const core = {
 		/**
 		 *
 		 * @param {string} providerName "MetaMask|Torus"
-		 * @param {Function} callback "MetaMask|Torus"
+		 * @param {Function} callback
 		 */
 		load: function (providerName, callback) {
 			var loadScript = function (src, onLoad) {
