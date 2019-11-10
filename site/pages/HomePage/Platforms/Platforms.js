@@ -11,10 +11,11 @@ import s from './Platforms.scss'
 
 import metamaskImage from './images/metamask.png'
 import torusImage from './images/torus.png'
+import lockIcon from './images/lock.svg'
 
 
 const items = [
-  { image: metamaskImage, title: 'Sign up with metamask', provider: 'MetaMask' },
+  { image: metamaskImage, disabled: true, title: 'Sign up with metamask', provider: 'MetaMask' },
   { image: torusImage, title: 'Sign up with Torus', provider: 'Torus' },
 ]
 
@@ -38,15 +39,23 @@ const Platforms = ({ history }) => {
       <SectionTitle>We provide interoperability between NFT via</SectionTitle>
       <div className={s.items}>
         {
-          items.map(({ image, title, provider }, index) => {
+          items.map(({ image, title, provider, disabled }, index) => {
             const itemClassName = cx(s.item, {
               [s.active]: provider === selectedProvider,
-              [s.disabled]: isFetching && provider !== selectedProvider,
+              [s.disabled]: disabled || (isFetching && provider !== selectedProvider),
             })
 
             return (
               <div key={index} className={s.itemContainer}>
-                <div className={itemClassName} onClick={() => handleProviderClick(provider)}>
+                <div className={itemClassName} onClick={() => !disabled && handleProviderClick(provider)}>
+                  {
+                    disabled && (
+                      <div className={s.lock}>
+                        <img className={s.lockIcon} src={lockIcon} alt="" />
+                        <div className={s.lockText}>Under construction</div>
+                      </div>
+                    )
+                  }
                   <div className={s.imageContainer}>
                     <img className={s.itemImage} src={image} alt="" />
                   </div>
