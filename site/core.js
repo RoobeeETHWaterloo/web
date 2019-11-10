@@ -668,8 +668,6 @@ const core = {
 
 				localStorage.setItem("fightAcc_privateKey", fightAcc.privateKey);
 
-				fightContract.methods.searchFight(config.catContractAddress, +core.char.currentIdGet(), fightAcc.address).send({from: skaleInstance.eth.accounts.currentProvider.selectedAddress}).then(console.log);
-
 				core.challengeRequest.p2pSubscribe();
 
 				findFight = function () {
@@ -684,6 +682,8 @@ const core = {
 				};
 
 				findFight();
+
+				fightContract.methods.searchFight(config.catContractAddress, +core.char.currentIdGet(), fightAcc.address).send({from: skaleInstance.eth.accounts.currentProvider.selectedAddress}).then(console.log);
 			},
 
 			/*
@@ -714,12 +714,13 @@ const core = {
 			action: function (action1, action2) {
 
 				var status = core.challenge.fightStatusGet();
+				console.log('status:', status);
 
-				core.char.fightIdGet(function(fightId) {
+				core.challenge.fightIdGet(function(fightId) {
 					if (state === 1) {
 						state = 2;
 						core.challenge.fightParamsGet(function(fight) {
-
+							console.log(fight);
 						});
 						core.challenge.p2pActionSend({});
 					} else {
@@ -804,7 +805,7 @@ const core = {
 				core.char.myInfoGet(function (_charMy) {
 					charMy = _charMy;
 					if (_charMy.fightId) {
-						fightState = status.fightStatusGet();
+						fightState = core.challenge.fightStatusGet();
 					}
 					core.challenge.enemyCharInfoGet(function (_charEnemy) {
 						charEnemy = _charEnemy;
