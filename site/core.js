@@ -270,6 +270,10 @@ var config = {
 				{
 					"name": "tokenAddress",
 					"type": "address"
+				},
+				{
+					"name": "playerNumber",
+					"type": "uint256"
 				}
 			],
 			"payable": false,
@@ -409,7 +413,7 @@ var config = {
 			"type": "function"
 		}
 	],
-	fightContractAddress: "0xe664f6832B5D5B868bcC763ED47365270eFD4fb8",
+	fightContractAddress: "0xc8fD51c7BBFE4A360eA7Ceff4206F2020d9Fd642",
 	catContractAddress: "0x06012c8cf97BEaD5deAe237070F9587f8E7A266d"
 
 };
@@ -599,7 +603,8 @@ const core = {
 								fullHp:     +info.fullHp,
 								lastFihgtBlockNumber: +info.lastFihgtBlockNumber,
 								level:      +info.level,
-								winsCount:  +info.winsCount
+								winsCount:  +info.winsCount,
+								playerNumber:   +info.playerNumber
 							});
 						});
 				});
@@ -671,7 +676,7 @@ const core = {
 					core.char.myInfoGet(function (info) {
 						var fightId = +info.fightId;
 						if (fightId) {
-							if (onStart) {onStart()};
+							if (onStart) {onStart()}
 						} else {
 							setTimeout(findFight, 3000);
 						}
@@ -708,15 +713,26 @@ const core = {
 			 */
 			action: function (action1, action2) {
 
-				core.challenge.fightParamsGet();
+				var status = core.challenge.fightStatusGet();
 
-				//var state = core.challenge.fightStatusGet();
-				if (state === 1) {
-					state = 2;
-					//core.challenge.p2pActionSend({});
-				} else {
-					state = 1;
-				}
+				core.char.fightIdGet(function(fightId) {
+					if (state === 1) {
+						state = 2;
+						core.challenge.fightParamsGet(function(fight) {
+
+						});
+						core.challenge.p2pActionSend({});
+					} else {
+						state = 1;
+					}
+				});
+
+			},
+
+			fightIdGet: function(callback) {
+				core.char.myInfoGet(function(info) {
+					callback(info.fightId);
+				});
 			},
 
 			fightParamsGet: function(fightId, callback) {
@@ -751,8 +767,8 @@ const core = {
 							playerNum = "player2";
 							enemyNum = "player1";
 						}
-						var enemyCharUid = fightInfo[enemyNum + "CharID"];
-						core.char.infoGetByTokenId(enemyCharUid, callback);
+						var enemyCharTokenId = fightInfo[enemyNum + "CharID"];
+						core.char.infoGetByTokenId(enemyCharTokenId, callback);
 					});
 				};
 
@@ -797,15 +813,19 @@ const core = {
 				});
 			},
 
-
 			onStateChange: function (handler) {
 
 			},
+
 
 			p2pActionSend: function(data, callback) {
 				axios.post(config.p2pConnectorUrl + '/send', data).then(function (response) {
 					callback(response);
 				});
+			},
+
+			giveUp: function(callback) {
+				fightContract.methods.giveUp().send({from: skaleInstance.eth.accounts.currentProvider.selectedAddress}).then(callback);
 			}
 		};
 		return challenge;
