@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { useConnect, useReducers } from 'store'
 import core from 'core'
 
 import Button from 'components/ui/Button/Button'
@@ -125,17 +126,16 @@ const useActionsSelectHandler = ({ selfActions, setSelfActions }) => {
         }
       }
     }
-  }, [ selfActions ])
+  }, [ selfActions, setSelfActions ])
 }
 
 const BrawlPage = () => {
-  const [ playerValues, setPlayerValues ] = useState({
-    self: { name: 'TinkyWinky', image: 'https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/1720283.svg', hp: 15 },
-    opponent: { name: 'WizzyPizzy', image: 'https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/1720012.svg', hp: 15 },
-  })
+  const { fight: { data, data: { state, me: self, opponent } } } = useConnect({ fight: 'fight' })
+  const { fight } = useReducers()
+  const [ isUIBlocked, setUIBlockingStatus ] = useState(false)
+  const [ selfActions, setSelfActions ] = useState({ defense: [], attack: [] })
 
-  const [ selfActions, setSelfActions ]         = useState({ defense: [], attack: [] })
-  const [ opponentActions, setOpponentActions ] = useState({ defense: [], attack: [] })
+  console.log(666, data)
 
   useEffect(() => {
     // core.challenge.stateGet()
@@ -143,27 +143,36 @@ const BrawlPage = () => {
 
   }, [])
 
-  const handleActionsSelect = useActionsSelectHandler({ selfActions, opponentActions, setSelfActions })
+  const handleActionsSelect = useActionsSelectHandler({ selfActions, setSelfActions })
 
   const handleReadyClick = useCallback(() => {
-    const attackStrength  = 2
-    const opponentActions = { attack: [ 1 ], defense: [ 4 ] }
-    const newSelfHp       = playerValues.self.hp - opponentActions.attack.filter((attack) => !selfActions.defense.map((v) => v - 3).includes(attack)).length * attackStrength
-    const newOpponentHp   = playerValues.opponent.hp - selfActions.attack.filter((attack) => !opponentActions.defense.map((v) => v + 3).includes(attack)).length * attackStrength
+    const action = [ ...selfActions.attack, ...selfActions.defense ]
 
-    setOpponentActions(opponentActions)
-    setPlayerValues((state) => ({ ...state, self: { ...state.self, hp: newSelfHp }, opponent: { ...state.opponent, hp: newOpponentHp } }))
+    if (action.length === 2) {
+      setUIBlockingStatus(true)
+      core.challenge.action(...action)
 
-    // TODO weird code
-    setTimeout(() => {
-      setOpponentActions({ defense: [], attack: [] })
-    }, 1800)
-  }, [ selfActions, playerValues ])
+      core.challenge.onStateChange(() => {
+        setUIBlockingStatus(false)
 
-  const isButtonDisabled = selfActions.length < 2
+        const attackStrength = 2
+
+        const opponentActions = { attack: [ 1 ], defense: [ 4 ] }
+        const newSelfHp       = self.hp - opponentActions.attack.filter((attack) => !selfActions.defense.map((v) => v - 3).includes(attack)).length * attackStrength
+        const newOpponentHp   = opponent.hp - selfActions.attack.filter((attack) => !opponentActions.defense.map((v) => v + 3).includes(attack)).length * attackStrength
+
+        fight.updateData({
+          me: { hp: newSelfHp },
+          opponent: { hp: newOpponentHp },
+        })
+      })
+    }
+  }, [ selfActions, self, opponent ])
+
+  const isButtonDisabled = [ ...selfActions.attack, ...selfActions.defense ].length < 2
 
   return (
-    <div className={s.page}>
+    <div>
       {/* <BrawlResults positive={false} /> */}
       <div className={s.header}>
         <div className={s.title}>Brawl is live!</div>
@@ -172,7 +181,7 @@ const BrawlPage = () => {
       <div className={s.content}>
         <div className={s.col}>
           <HeroCard
-            hero={playerValues.self}
+            hero={self}
             actionTitle="Defense"
             actionItems={defenseActions}
             actionValues={selfActions.defense}
@@ -185,7 +194,7 @@ const BrawlPage = () => {
         </div>
         <div className={s.col}>
           <HeroCard
-            hero={playerValues.opponent}
+            hero={opponent}
             actionTitle="Attack"
             actionItems={attackActions}
             actionValues={selfActions.attack}

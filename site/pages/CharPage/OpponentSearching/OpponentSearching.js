@@ -24,8 +24,24 @@ const OpponentSearching = ({ history }) => {
 
       console.log(5555, { fightState, charMy, charEnemy })
 
+      /*
+
+        tokenId
+        name
+        imageUrl
+        currentHP
+        damage
+        fightId
+        fightsCount
+        fullHp
+        lastFihgtBlockNumber
+        level
+        winsCount
+
+       */
+
       fight.setData({
-        ...fightState,
+        state: fightState,
         me: charMy,
         opponent: charEnemy,
       })

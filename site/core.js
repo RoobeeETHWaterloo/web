@@ -409,7 +409,7 @@ var config = {
 			"type": "function"
 		}
 	],
-	fightContractAddress: "0x0e4219Ec07C0E2245Dc6b3e48B7eDdD20a216787",
+	fightContractAddress: "0xe664f6832B5D5B868bcC763ED47365270eFD4fb8",
 	catContractAddress: "0x06012c8cf97BEaD5deAe237070F9587f8E7A266d"
 
 };
@@ -696,8 +696,8 @@ const core = {
 		var challenge = {
 			/*
 			 * @description Сделать ход
-			 * @params action1 {number}     //1-атака в голову, 2-атака в живот, 3-под хвост
-			 * @params action2 {number}     //4-защита головы, 5-защита живота, 6-защита хвоста
+			 * @params action1 {number}     // 1-атака в голову, 2-атака в живот, 3-под хвост
+			 * @params action2 {number}     // 4-защита головы, 5-защита живота, 6-защита хвоста
 			 */
 			action: function (action1, action2) {
 				var state = core.challenge.stateGet();
@@ -774,7 +774,7 @@ const core = {
 			},
 
 
-			onStageChange: function () {
+			onStateChange: function () {
 
 			}
 		};
