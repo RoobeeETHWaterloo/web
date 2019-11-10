@@ -509,9 +509,10 @@ const core = {
 		 * @description Get account name
 		 * @return {string}     //Имя аккаунта (одно на всех котов)
 		 */
-		nameGet: function () {
+		getName: function () {
 			return skaleInstance ? "hello" : null;
 		},
+
 		ownerAddressGet: function () {
 			return skaleInstance.eth.accounts.currentProvider.selectedAddress;
 		}

@@ -22,7 +22,7 @@ const OpponentWaiting = () => (
                 <Fragment>
                   <div className={s.hr} />
                   <div className={s.title}>So sad, but the opponent didn't accept the fight...</div>
-                  <Button className={s.button} to="/brawl">Start new fight</Button>
+                  <Button className={s.button} to="/chars">Start new fight</Button>
                 </Fragment>
               )
             }
