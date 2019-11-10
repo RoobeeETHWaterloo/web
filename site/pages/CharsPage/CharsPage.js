@@ -5,6 +5,7 @@ import request from 'request'
 import ContentSpinner from 'components/ui/ContentSpinner/ContentSpinner'
 
 import Chars from './Chars/Chars'
+import NFTDocs from './NFTDocs/NFTDocs'
 
 import s from './CharsPage.scss'
 
@@ -15,8 +16,8 @@ const CharsPage = () => {
   const { isFetching, isFetched, items } = useConnect((state) => state.chars)
   const { chars } = useReducers()
 
-  const title     = items && items.length ? 'Choose your fighter' : 'No fighters found'
-  const subTitle  = items && items.length ? 'choose your destiny(if you like MK)' : 'Whoooohooo'
+  const title     = items && items.length ? 'Choose your fighter' : '&nbsp;&nbsp;&nbsp;Ooops...'
+  const subTitle  = items && items.length ? 'choose your destiny(if you like MK)' : 'Seems like we don’t see NFT’s on your address'
 
   useEffect(() => {
     if (!isFetched) {
@@ -57,11 +58,24 @@ const CharsPage = () => {
     )
   }
 
+  if (!items || !items.length) {
+    return (
+      <div className={s.page}>
+        <div className={s.header}>
+          <div className={s.icon}>🤨</div>
+          <div className={s.title} dangerouslySetInnerHTML={{ __html: title }} />
+          <div className={s.subTitle}>{subTitle}</div>
+        </div>
+        <NFTDocs />
+      </div>
+    )
+  }
+
   return (
-    <div>
+    <div className={s.page}>
       <div className={s.header}>
-        <img className={s.icon} src={swordsImage} alt="" />
-        <div className={s.title}>{title}</div>
+        <img className={s.icon} src={swordsImage} alt="" style={{ width: 70 }} />
+        <div className={s.title} dangerouslySetInnerHTML={{ __html: title }} />
         <div className={s.subTitle}>{subTitle}</div>
       </div>
       <Chars items={items} />
