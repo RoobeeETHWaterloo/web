@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { Fragment, useState, useEffect, useCallback } from 'react'
 import { useConnect, useReducers } from 'store'
 import request from 'request'
 import core from 'core'
@@ -18,6 +18,7 @@ const CharPage = ({ match: { params: { id: charId } } }) => {
   }), [ charId ])
 
   const { chars } = useReducers()
+  const [ isSearching, setSearchingStatus ] = useState(false)
 
   useEffect(() => {
     if (!data) {
@@ -39,7 +40,7 @@ const CharPage = ({ match: { params: { id: charId } } }) => {
   }, [ data ])
 
   const handleFightClick = useCallback(() => {
-
+    setSearchingStatus(true)
   }, [])
 
   if (!isFetched && (!data || isFetching)) {
@@ -50,49 +51,59 @@ const CharPage = ({ match: { params: { id: charId } } }) => {
 
   return (
     <div className={s.charPage}>
-      <div className={s.leftCol}>
-        <CharImage src={data.image} /><br />
-        <Button to="/chars" color="blue">Select character</Button><br />
-        <Button onClick={handleFightClick}>FIGHT!</Button>
-      </div>
-      <div className={s.rightCol}>
-        <div className={s.headline}>
-          <div>
-            <div className={s.id}># 1344552</div>
-            <div className={s.name}>Foo</div>
-          </div>
-          <div>
-
-          </div>
+      {
+        isSearching && (
+          <Fragment>
+            <ContentSpinner />
+            Searching for opponent!
+          </Fragment>
+        )
+      }
+      <div className={s.content}>
+        <div className={s.leftCol}>
+          <CharImage src={data.image} /><br />
+          <Button to="/chars" color="blue">Select character</Button><br />
+          <Button onClick={handleFightClick}>FIGHT!</Button>
         </div>
-        <table className={s.table}>
-          <tbody>
-          <tr>
-            <td className={s.label}>OWNER:</td>
-            <td className={s.value}>0x0235235235235asfafaf66aa</td>
-          </tr>
-          <tr>
-            <td className={s.label}>LVL:</td>
-            <td className={s.value}>13</td>
-          </tr>
-          <tr>
-            <td className={s.label}>EXP:</td>
-            <td className={s.value}>1276 <span>/ 1300</span></td>
-          </tr>
-          <tr>
-            <td className={s.label}>HP:</td>
-            <td className={s.value}>15</td>
-          </tr>
-          <tr>
-            <td className={s.label}>WINS:</td>
-            <td className={s.value}>30</td>
-          </tr>
-          <tr>
-            <td className={s.label}>LOSES:</td>
-            <td className={s.value}>24</td>
-          </tr>
-          </tbody>
-        </table>
+        <div className={s.rightCol}>
+          <div className={s.headline}>
+            <div>
+              <div className={s.id}># 1344552</div>
+              <div className={s.name}>Foo</div>
+            </div>
+            <div>
+
+            </div>
+          </div>
+          <table className={s.table}>
+            <tbody>
+            <tr>
+              <td className={s.label}>OWNER:</td>
+              <td className={s.value}>0x0235235235235asfafaf66aa</td>
+            </tr>
+            <tr>
+              <td className={s.label}>LVL:</td>
+              <td className={s.value}>13</td>
+            </tr>
+            <tr>
+              <td className={s.label}>EXP:</td>
+              <td className={s.value}>1276 <span>/ 1300</span></td>
+            </tr>
+            <tr>
+              <td className={s.label}>HP:</td>
+              <td className={s.value}>15</td>
+            </tr>
+            <tr>
+              <td className={s.label}>WINS:</td>
+              <td className={s.value}>30</td>
+            </tr>
+            <tr>
+              <td className={s.label}>LOSES:</td>
+              <td className={s.value}>24</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )
