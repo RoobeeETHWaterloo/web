@@ -20,11 +20,10 @@ const OpponentSearching = ({ history }) => {
     fight.setSearching(true)
 
     core.challengeRequest.onStart(() => {
-      const { fightState, charMy, charEnemy } = core.challenge.stateGet()
+      core.challenge.stateGet(({ fightState, charMy, charEnemy }) => {
+        console.log(5555, { fightState, charMy, charEnemy })
 
-      console.log(5555, { fightState, charMy, charEnemy })
-
-      /*
+        /*
 
         tokenId
         name
@@ -40,13 +39,24 @@ const OpponentSearching = ({ history }) => {
 
        */
 
-      fight.setData({
-        state: fightState,
-        me: charMy,
-        opponent: charEnemy,
-      })
+        const modifyData = ({ tokenId, name, imageUrl, fullHp, level, fightsCount, winsCount }) => ({
+          tokenId,
+          name,
+          image: imageUrl,
+          hp: fullHp,
+          level,
+          fightsCount,
+          winsCount,
+        })
 
-      history.push('/brawl')
+        fight.setData({
+          state: fightState,
+          me: modifyData(charMy),
+          opponent: modifyData(charEnemy),
+        })
+
+        history.push('/brawl')
+      })
     })
 
     core.challengeRequest.create()
