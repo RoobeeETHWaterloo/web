@@ -1,0 +1,33 @@
+.content {
+  text-align: center;
+}
+
+.muted {
+  opacity: 0.3;
+  transition: opacity 0.4s linear;
+}
+
+.title {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  font-family: 'Varela Round', sans-serif;
+  font-weight: 600;
+  font-size: 36px;
+}
+
+.text {
+  font-family: 'Varela Round', sans-serif;
+  font-size: 24px;
+}
+
+.hr {
+  width: 100%;
+  height: 2px;
+  background-color: #F5F6FC;
+  margin: 40px 0;
+}
+
+.button {
+  width: 280px;
+  margin: 30px auto;
+}

@@ -3,7 +3,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import s from './Countdown.scss'
 
 
-const Countdown = ({ time }) => {
+const Countdown = ({ children, time }) => {
   const [ timeLeft, setTimeLeft ] = useState(time)
 
   useEffect(() => {
@@ -34,15 +34,19 @@ const Countdown = ({ time }) => {
   }
 
   return (
-    <div className={s.countdown}>
-      {
-        time < 60 ? (
-          <Fragment><span>{secs}</span> sec</Fragment>
-        ) : (
-          <Fragment><span>{mins}</span> min <span>{secs}</span> sec</Fragment>
-        )
-      }
-    </div>
+    <Fragment>
+      <div className={s.countdown}>
+        {
+          time < 60 ? (
+            <Fragment><span>{secs}</span> sec</Fragment>
+          ) : (
+            <Fragment><span>{mins}</span> min <span>{secs}</span> sec</Fragment>
+          )
+        }
+
+      </div>
+      {typeof children === 'function' ? children({ value: timeLeft }) : children}
+    </Fragment>
   )
 }
 
