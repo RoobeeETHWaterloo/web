@@ -434,6 +434,10 @@ const core = {
 			 * @param {Function} callback "MetaMask|Torus"
 			 */
 			load: function (providerName, callback) {
+				try {
+					localStorage.setItem('selectedProvider', providerName)
+				}
+				catch (err) {}
 
 				var onReady = function () {
 					fightContract = window.fightContract = new skaleInstance.eth.Contract(config.fightAbi, config.fightContractAddress);
@@ -655,13 +659,13 @@ const core = {
 						if (fightId) {
 							// alert(info.fightId);
 
-              if (typeof callback === 'function') {
-                callback();
-              }
+							if (typeof callback === 'function') {
+								callback();
+							}
 
 							if (typeof onStart === 'function') {
-                onStart();
-              }
+								onStart();
+							}
 						} else {
 							setTimeout(findFight, 3000);
 						}
